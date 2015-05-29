@@ -1,6 +1,6 @@
 package org.catkin.supermassage.service;
 
-import org.catkin.supermassage.dao.StoreRepository;
+import org.catkin.supermassage.dao.StoreDao;
 import org.catkin.supermassage.entity.Store;
 import org.catkin.supermassage.utils.RESTurl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class StoreService {
 	
 	@Autowired
-	private StoreRepository storeMapper;
+	private StoreDao storeMapper;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String getStores() {
