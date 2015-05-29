@@ -1,6 +1,7 @@
 package org.catkin.supermassage.entity;
 
 public class Store {
+
 	private Long id;				//商铺ID
 	private String name;			//商铺名称
 	private String pwd;				//商铺管理密码
