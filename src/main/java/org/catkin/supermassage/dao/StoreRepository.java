@@ -29,7 +29,7 @@ public class StoreRepository {
 			
 			store.setPhone(rs.getString("phone"));
 			store.setAddress(rs.getString("address"));
-			store.setLongLatItude(rs.getString("longLatItude"));
+			store.setLongLatItude(rs.getString("long_lat_itude"));
 			
 			store.setRemark(rs.getString("remark"));
 			return store;

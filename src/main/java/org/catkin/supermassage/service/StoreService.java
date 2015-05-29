@@ -4,7 +4,6 @@ import org.catkin.supermassage.dao.StoreRepository;
 import org.catkin.supermassage.entity.Store;
 import org.catkin.supermassage.utils.RESTurl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,8 +27,8 @@ public class StoreService {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public String getStoreById(@PathVariable Long id) {
-		Store store = new StoreRepository().getStoreById(id);
-		return id.toString();
+	public Store getStoreById(@PathVariable Long id) {
+		Store store = storeMapper.getStoreById(id);
+		return store;
 	}
 }
