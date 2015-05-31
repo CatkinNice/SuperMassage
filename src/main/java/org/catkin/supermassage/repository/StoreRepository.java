@@ -1,4 +1,4 @@
-package org.catkin.supermassage.dao;
+package org.catkin.supermassage.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
  *
  */
 @Repository
-public class StoreDao extends BaseDao {
+public class StoreRepository extends BaseRepository {
 	
 	private final static RowMapper<Store> storeMapper = new RowMapper<Store>() {
 		@Override

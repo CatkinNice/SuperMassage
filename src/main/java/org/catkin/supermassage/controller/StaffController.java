@@ -1,4 +1,4 @@
-package org.catkin.supermassage.service;
+package org.catkin.supermassage.controller;
 
 import org.catkin.supermassage.utils.RESTurl;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @EnableAutoConfiguration
 @RequestMapping(RESTurl.staff)
-public class StaffService {
+public class StaffController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String getStaffs() {
