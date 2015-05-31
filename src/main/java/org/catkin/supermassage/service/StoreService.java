@@ -4,7 +4,6 @@ import org.catkin.supermassage.dao.StoreDao;
 import org.catkin.supermassage.entity.Store;
 import org.catkin.supermassage.utils.Log;
 import org.catkin.supermassage.utils.RESTurl;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +24,7 @@ public class StoreService {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String getStores() {
-		Log.logger.error("==============================log====");
+		Log.logger.debug("==============================log====");
 		
 		return "this is store!";
 	}
