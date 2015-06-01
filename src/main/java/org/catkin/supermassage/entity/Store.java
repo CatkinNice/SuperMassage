@@ -64,7 +64,7 @@ public class Store {
 	}
 
 	public String getRemark() {
-		return remark;
+		return remark ;
 	}
 
 	public void setRemark(String remark) {

@@ -12,9 +12,18 @@ public class StoreRepositoryTest extends BaseTest {
 	
 	@Test
 	public void getStoreById() {
-		
-		Store store = sr.getStoreById(1L);
-		System.out.println("OK=============================" + store.getName());
+		Store store = sr.getStoreById(5L);
+		System.out.println(store.getName());
+	}
+	
+	@Test
+	public void addStore() {
+		Store store = new Store();
+		store.setId(3L);
+		store.setName("这是第三家店");
+		store.setPwd("987654321");
+		store.setLongLatItude("127,168");
+		sr.insertOrUpdateStore(store);
 	}
 	
 	
