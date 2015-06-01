@@ -2,6 +2,7 @@ package org.catkin.supermassage.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 /**
  * 
@@ -11,4 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class BaseRepository {
 	@Autowired
 	protected JdbcTemplate template;
+	
+	@Autowired
+	protected NamedParameterJdbcTemplate nTemplate;
 }

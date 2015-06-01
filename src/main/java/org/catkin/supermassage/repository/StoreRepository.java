@@ -2,9 +2,11 @@ package org.catkin.supermassage.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
 
 import org.catkin.supermassage.entity.Store;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -32,9 +34,21 @@ public class StoreRepository extends BaseRepository {
 	};
 	
 	public Store getStoreById(Long id) {
-		String sql = "SELECT id, name, pwd, long_lat_itude, address, phone, remark FROM t_store WHERE id = ?";
-		Object[] args = {id};
-		return template.queryForObject(sql, args, storeMapper);
+		String sql = "SELECT id, name, pwd, long_lat_itude, address, phone, remark FROM t_store WHERE id = :id";
+		return nTemplate.queryForObject(sql, Collections.singletonMap("id", id), storeMapper);
+	}
+	
+	public void insertOrUpdateStore(Store store) {
+		String sql = "INSERT INTO t_store (id, name, pwd, long_lat_itude, address, phone, remark) "
+				+ "VALUES (:id, :name, :pwd, :longLatItude, :address, :phone, :remark)"
+				+ "ON DUPLICATE KEY UPDATE "
+				+ "name = :name, "
+				+ "pwd = :pwd, "
+				+ "long_lat_itude = :longLatItude, "
+				+ "address = :address, "
+				+ "phone = :phone, "
+				+ "remark = :remark";
+		nTemplate.update(sql, new BeanPropertySqlParameterSource(store));
 	}
 
 }
