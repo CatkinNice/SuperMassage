@@ -33,9 +33,9 @@ public class Sequence {
 
 			bw = new BufferedWriter(new FileWriter(file));
 			bw.write(String.valueOf(index + CACHE_SIZE));
-			Log.logger.debug("getSequenceValue:" + index + ", cacheSize:" + CACHE_SIZE);
+			Log.info("getSequenceValue:" + index + ", cacheSize:" + CACHE_SIZE);
 		} catch (Exception ex) {
-			Log.logger.error("[getSequenceValue]", ex);
+			Log.error("[getSequenceValue]", ex);
 		} finally {
 			try {
 				if (br != null) br.close();

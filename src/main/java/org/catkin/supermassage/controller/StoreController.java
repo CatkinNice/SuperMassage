@@ -2,7 +2,6 @@ package org.catkin.supermassage.controller;
 
 import org.catkin.supermassage.entity.Store;
 import org.catkin.supermassage.service.StoreService;
-import org.catkin.supermassage.utils.Log;
 import org.catkin.supermassage.utils.RESTurl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,9 +21,13 @@ public class StoreController {
 	@Autowired
 	private StoreService storeService;
 	
+	@RequestMapping(method = RequestMethod.PUT)
+	public String insertOrUpdateStores() {
+		return "this is store!";
+	}
+	
 	@RequestMapping(method = RequestMethod.GET)
 	public String getStores() {
-		Log.logger.error("==============================LOG===");
 		
 		return "this is store!";
 	}

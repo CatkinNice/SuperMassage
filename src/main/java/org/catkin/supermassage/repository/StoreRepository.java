@@ -5,9 +5,11 @@ import java.sql.SQLException;
 import java.util.Collections;
 
 import org.catkin.supermassage.entity.Store;
+import org.catkin.supermassage.utils.MyJdbcTemplate;
+import org.springframework.stereotype.Repository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
-import org.springframework.stereotype.Repository;
 
 /**
  * 
@@ -15,7 +17,10 @@ import org.springframework.stereotype.Repository;
  *
  */
 @Repository
-public class StoreRepository extends BaseRepository {
+public class StoreRepository {
+	
+	@Autowired
+	private MyJdbcTemplate template;
 	
 	private final static RowMapper<Store> storeMapper = new RowMapper<Store>() {
 		@Override
@@ -35,7 +40,7 @@ public class StoreRepository extends BaseRepository {
 	
 	public Store getStoreById(Long id) {
 		String sql = "SELECT id, name, pwd, long_lat_itude, address, phone, remark FROM t_store WHERE id = :id";
-		return nTemplate.queryForObject(sql, Collections.singletonMap("id", id), storeMapper);
+		return template.queryForObject(sql, Collections.singletonMap("id", id), storeMapper);
 	}
 	
 	public void insertOrUpdateStore(Store store) {
@@ -48,7 +53,7 @@ public class StoreRepository extends BaseRepository {
 				+ "address = :address, "
 				+ "phone = :phone, "
 				+ "remark = :remark";
-		nTemplate.update(sql, new BeanPropertySqlParameterSource(store));
+		template.update(sql, new BeanPropertySqlParameterSource(store));
 	}
 
 }

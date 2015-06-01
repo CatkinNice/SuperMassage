@@ -12,7 +12,7 @@ public class StoreRepositoryTest extends BaseTest {
 	
 	@Test
 	public void getStoreById() {
-		Store store = sr.getStoreById(5L);
+		Store store = sr.getStoreById(1L);
 		System.out.println(store.getName());
 	}
 	
