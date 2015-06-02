@@ -25,7 +25,10 @@ public class StoreService {
 	}
 
 	public Store getStoreById(Long id) {
-		
 		return sr.getStoreById(id);
+	}
+
+	public void delStoreById(Long id) {
+		
 	}
 }

@@ -2,6 +2,7 @@ package org.catkin.supermassage.controller;
 
 import org.catkin.supermassage.entity.Store;
 import org.catkin.supermassage.service.StoreService;
+import org.catkin.supermassage.utils.ConstantsStatus;
 import org.catkin.supermassage.utils.Json;
 import org.catkin.supermassage.utils.RESTurl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +40,11 @@ public class StoreController {
 	public Store getStoreById(@PathVariable Long id) {
 		Store store = storeService.getStoreById(id);
 		return store;
+	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public String delStoreById(@PathVariable Long id) {
+		storeService.delStoreById(id);
+		return ConstantsStatus.SUCCESS;
 	}
 }
