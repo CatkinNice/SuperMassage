@@ -1,6 +1,6 @@
 package org.catkin.supermassage.entity;
 
-public class Store {
+public class Store extends QueryPageParam {
 
 	private Long id;				//商铺ID
 	private String name;			//商铺名称
