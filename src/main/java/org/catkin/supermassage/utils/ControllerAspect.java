@@ -30,7 +30,7 @@ public class ControllerAspect {
 	}
 
 	private String getLogInfo(JoinPoint jp) {
-		StringBuilder info = new StringBuilder("RequestUrl:");
+		StringBuilder info = new StringBuilder("Url:");
 		try {
 			// 方法名
 			String methodName = jp.getSignature().getName();
@@ -43,7 +43,7 @@ public class ControllerAspect {
 			}
 			
 			// 参数
-			String param = ", param:";
+			String param = ", param:【";
 			Object [] args = jp.getArgs();
 			Class<?>[] clzs = new Class<?>[args.length];
 			
@@ -58,22 +58,26 @@ public class ControllerAspect {
 			}
 
 			// 方法
-			Method method = clz.getMethod(methodName, clzs);
-			mapping =  method.getAnnotation(RequestMapping.class);
-			
-			if (mapping != null) {
-				if (mapping.value().length > 0) {
-					info.append(mapping.value()[0]);
-				}
+			try {
+				Method method = clz.getMethod(methodName, clzs);
+				mapping =  method.getAnnotation(RequestMapping.class);
 				
-				if (mapping.method().length > 0) {
-					info.append(", method:").append(mapping.method()[0]);
+				if (mapping != null) {
+					if (mapping.value().length > 0) {
+						info.append(mapping.value()[0]);
+					}
+					
+					if (mapping.method().length > 0) {
+						info.append(", method:").append(mapping.method()[0]);
+					}
 				}
+			} catch (Exception e) {
 			}
 			
 			if (args.length > 0) {
 				info.append(param);
 				info.deleteCharAt(info.length() - 1);
+				info.append("】");
 			}
 		} catch (Exception ex) {
 			Log.error(ex);

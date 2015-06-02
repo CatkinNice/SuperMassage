@@ -1,8 +1,9 @@
 package org.catkin.supermassage.controller;
 
+import java.util.List;
+
 import org.catkin.supermassage.entity.Store;
 import org.catkin.supermassage.service.StoreService;
-import org.catkin.supermassage.utils.ConstantsStatus;
 import org.catkin.supermassage.utils.Json;
 import org.catkin.supermassage.utils.RESTurl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -31,20 +33,19 @@ public class StoreController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String getStores() {
-		
-		return "this is store!";
+	public List<Store> getStores(@RequestParam(required = false) String key, 
+			@RequestParam(required = false) Integer from, 
+			@RequestParam(required = false) Integer size) {
+		return storeService.getStores(key, from, size);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Store getStoreById(@PathVariable Long id) {
-		Store store = storeService.getStoreById(id);
-		return store;
+		return storeService.getStoreById(id);
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public String delStoreById(@PathVariable Long id) {
-		storeService.delStoreById(id);
-		return ConstantsStatus.SUCCESS;
+	@RequestMapping(value = "/{id}/info", method = RequestMethod.GET)
+	public Store getStoreInfoById(@PathVariable Long id) {
+		return storeService.getStoreById(id);
 	}
 }

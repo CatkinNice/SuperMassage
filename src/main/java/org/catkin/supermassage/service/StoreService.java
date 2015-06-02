@@ -1,5 +1,7 @@
 package org.catkin.supermassage.service;
 
+import java.util.List;
+
 import org.catkin.supermassage.entity.Store;
 import org.catkin.supermassage.repository.StoreRepository;
 import org.catkin.supermassage.utils.Sequence;
@@ -28,7 +30,7 @@ public class StoreService {
 		return sr.getStoreById(id);
 	}
 
-	public void delStoreById(Long id) {
-		
+	public List<Store> getStores(String key, Integer from, Integer size) {
+		return sr.getStores(key, from, size);
 	}
 }

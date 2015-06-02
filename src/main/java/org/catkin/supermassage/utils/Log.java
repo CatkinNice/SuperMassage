@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 
- * @author cakin
+ * @author Catkin_nice
  *
  */
 public class Log {
