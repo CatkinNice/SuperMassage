@@ -14,13 +14,14 @@ DROP TABLE IF EXISTS `t_store`;
 CREATE TABLE `t_store` (
   `id` bigint(20) NOT NULL COMMENT '店铺ID',
   `name` varchar(50) NOT NULL COMMENT '店铺名称',
-  `pwd` varchar(50) NOT NULL DEFAULT '' COMMENT '店铺管理密码',
-  `long_lat_itude` varchar(50) NOT NULL DEFAULT '' COMMENT '店铺经纬度',
-  `address` varchar(200) NOT NULL DEFAULT '' COMMENT '店铺地址',
-  `phone` varchar(15) NOT NULL DEFAULT '' COMMENT '电话',
-  `remark` varchar(500) NOT NULL DEFAULT '' COMMENT '备注',
-  PRIMARY KEY (`id`)
-);
+  `pwd` varchar(50) NOT NULL default '' COMMENT '店铺管理密码',
+  `long_lat_itude` varchar(50) default '' COMMENT '店铺经纬度',
+  `address` varchar(200) default '' COMMENT '店铺地址',
+  `phone` varchar(15) default '' COMMENT '电话',
+  `remark` varchar(500) default '' COMMENT '备注',
+  `deleted` tinyint(1) NOT NULL default '0' COMMENT '删除状态(0:正常，1:删除)',
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='店铺表';
 
 
 DROP TABLE IF EXISTS `t_store_buy`;
@@ -59,8 +60,8 @@ CREATE TABLE `t_packages` (
   `name` varchar(100) NOT NULL COMMENT '产品名字',
   `store_price` float NOT NULL COMMENT '产品店铺价格',
   `app_price` float NOT NULL COMMENT '产品APP价格',
-  `timed` int(4) NOT NULL COMMENT '服务时长（分）',
-  `remark` varchar(500) NOT NULL DEFAULT '' COMMENT '产品介绍',
+  `timed` tinyint(4) NOT NULL COMMENT '服务时长（分）',
+  `remark` varchar(500) COMMENT '产品介绍',
   PRIMARY KEY (`id`),
   KEY `FK_packages_store` (`store_id`),
   CONSTRAINT `FK_packages_store` FOREIGN KEY (`store_id`) REFERENCES `t_store` (`id`) ON DELETE CASCADE
@@ -78,7 +79,7 @@ CREATE TABLE `t_staff` (
   `experience` tinyint(2) NOT NULL DEFAULT '1' COMMENT '工作经验(年)',
   `job` varchar(20) NOT NULL COMMENT '岗位',
   `remark` varchar(500) NOT NULL DEFAULT '' COMMENT '备注',
-  `woke_status` bit(1) NOT NULL DEFAULT b'0' COMMENT '服务状态（0：空闲，1：服务中）',
+  `woke_status` tinyint(1) NOT NULL DEFAULT b'0' COMMENT '服务状态（0：空闲，1：服务中）',
   PRIMARY KEY (`id`),
   KEY `FK_staff_store` (`store_id`),
   CONSTRAINT `FK_staff_store` FOREIGN KEY (`store_id`) REFERENCES `t_store` (`id`) ON DELETE CASCADE
