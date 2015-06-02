@@ -43,7 +43,7 @@ public class StoreRepository {
 		return template.queryForObject(sql, Collections.singletonMap("id", id), storeMapper);
 	}
 	
-	public void insertOrUpdateStore(Store store) {
+	public void addOrEditStore(Store store) {
 		String sql = "INSERT INTO t_store (id, name, pwd, long_lat_itude, address, phone, remark) "
 				+ "VALUES (:id, :name, :pwd, :longLatItude, :address, :phone, :remark)"
 				+ "ON DUPLICATE KEY UPDATE "

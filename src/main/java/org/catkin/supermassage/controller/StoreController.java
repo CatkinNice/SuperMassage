@@ -2,9 +2,11 @@ package org.catkin.supermassage.controller;
 
 import org.catkin.supermassage.entity.Store;
 import org.catkin.supermassage.service.StoreService;
+import org.catkin.supermassage.utils.Json;
 import org.catkin.supermassage.utils.RESTurl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,8 +24,9 @@ public class StoreController {
 	private StoreService storeService;
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public String insertOrUpdateStores() {
-		return "this is store!";
+	public Store addOrEditStore(@RequestBody String json) throws Exception {
+		Store store = Json.parse(json, Store.class);
+		return storeService.addOrEditStore(store);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
