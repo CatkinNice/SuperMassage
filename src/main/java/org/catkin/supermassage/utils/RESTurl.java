@@ -12,6 +12,11 @@ public interface RESTurl {
 	 * 店铺服务
 	 */
 	String store = "/sm/store";
+
+	/**
+	 * 店铺服务
+	 */
+	String storeBuy = "/sm/store/buy";
 	
 	/**
 	 * 店铺服务
