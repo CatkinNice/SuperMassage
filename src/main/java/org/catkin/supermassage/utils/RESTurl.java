@@ -9,17 +9,17 @@ package org.catkin.supermassage.utils;
  */
 public interface RESTurl {
 	/**
-	 * 店铺服务
+	 * 店铺
 	 */
-	String store = "/sm/store";
+	String store = "/store";
 
 	/**
 	 * 店铺服务
 	 */
-	String storeBuy = "/sm/store/buy";
+	String storeBuy = "/store/buy";
 	
 	/**
-	 * 店铺服务
+	 * 员工
 	 */
-	String staff = "/sm/staff";
+	String staff = "/staff";
 }

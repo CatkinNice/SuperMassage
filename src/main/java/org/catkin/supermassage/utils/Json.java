@@ -6,8 +6,9 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 public class Json {
 
-	private static final ObjectMapper mapper= new ObjectMapper().setSerializationInclusion(Include.NON_NULL);
-
+	private static final ObjectMapper mapper= new ObjectMapper()
+	.setSerializationInclusion(Include.NON_NULL);
+	
 	private Json() {
 		
 	}

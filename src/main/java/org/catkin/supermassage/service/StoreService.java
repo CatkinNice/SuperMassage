@@ -3,6 +3,7 @@ package org.catkin.supermassage.service;
 import java.util.List;
 
 import org.catkin.supermassage.entity.Store;
+import org.catkin.supermassage.repository.StoreBuyRepository;
 import org.catkin.supermassage.repository.StoreRepository;
 import org.catkin.supermassage.utils.Sequence;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class StoreService {
 	@Autowired
 	private StoreRepository sr;
 	
+	@Autowired
+	private StoreBuyRepository sbr;
+	
 	public Store addOrEditStore(Store store) {
 		if (store.getId() == null) {
 			store.setId(Sequence.getNextId());
@@ -27,7 +31,9 @@ public class StoreService {
 	}
 
 	public Store getStoreById(Long id) {
-		return sr.getStoreById(id);
+		Store store = sr.getStoreById(id);
+		store.setStaffNum(sbr.getStaffNum(id));
+		return store;
 	}
 
 	public List<Store> getStores(String key, Integer from, Integer size) {

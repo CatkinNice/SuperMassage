@@ -11,6 +11,7 @@ public class Store {
 	private String phone;			//商铺电话
 	
 	private String remark;			//备注
+	private Integer staffNum;		//员工数
 
 	public Store() {
 	}
@@ -69,6 +70,14 @@ public class Store {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public Integer getStaffNum() {
+		return staffNum;
+	}
+
+	public void setStaffNum(Integer staffNum) {
+		this.staffNum = staffNum;
 	}
 	
 }
