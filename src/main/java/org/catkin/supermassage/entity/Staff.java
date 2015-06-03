@@ -5,7 +5,7 @@ package org.catkin.supermassage.entity;
  * @author Catkin_nice
  *
  */
-public class Staff {
+public class Staff extends QueryParam {
 	private Long id;			//员工ID
 	private Long storeId;		//店铺ID
 	private String name;		//员工名字
@@ -18,7 +18,7 @@ public class Staff {
 	private String job;			//岗位
 	private String remark;		//备注
 	
-	private boolean wokeStatus; //服务状态（false:空闲，true:服务中）
+	private int wokeStatus; //服务状态（0:空闲，1:服务中）
 
 	public Staff() {
 	}
@@ -95,11 +95,11 @@ public class Staff {
 		this.remark = remark;
 	}
 
-	public boolean isWokeStatus() {
+	public int getWokeStatus() {
 		return wokeStatus;
 	}
 
-	public void setWokeStatus(boolean wokeStatus) {
+	public void setWokeStatus(int wokeStatus) {
 		this.wokeStatus = wokeStatus;
 	}
 	

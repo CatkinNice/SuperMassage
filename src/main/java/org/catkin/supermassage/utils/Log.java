@@ -20,8 +20,8 @@ public class Log {
 		logger.info(t.getMessage(), t);
 	}
 	
-	public static void info(String msg, Throwable t) {
-		logger.info(msg, t);
+	public static void info(ErrorType msg, Throwable t) {
+		logger.info(msg.name(), t);
 	}
 	
 	public static void error(String msg) {
@@ -32,7 +32,7 @@ public class Log {
 		logger.error(t.getMessage(), t);
 	}
 	
-	public static void error(String msg, Throwable t) {
-		logger.error(msg, t);
+	public static void error(ErrorType msg, Throwable t) {
+		logger.error(msg.name(), t);
 	}
 }
