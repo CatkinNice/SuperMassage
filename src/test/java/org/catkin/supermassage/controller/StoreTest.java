@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.catkin.supermassage.BaseTest;
+import org.catkin.supermassage.entity.Store;
 import org.catkin.supermassage.entity.StoreBuy;
 import org.catkin.supermassage.utils.Json;
 import org.junit.Test;
@@ -38,5 +39,11 @@ public class StoreTest extends BaseTest {
 	public void getStoreBuys() throws Exception {
 		List<StoreBuy> list = sc.getStoreBuys(5);
 		System.out.println(list.get(0).getPrice());
+	}
+	
+	@Test
+	public void getStoreBuy() throws Exception {
+		Store store = sc.getStoreById(1);
+		System.out.println(Json.toJson(store));
 	}
 }

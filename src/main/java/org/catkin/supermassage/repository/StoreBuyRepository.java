@@ -32,10 +32,10 @@ public class StoreBuyRepository {
 			
 			storeBuy.setStaffNum(rs.getInt("staff_num"));
 			storeBuy.setPrice(rs.getFloat("price"));
-			storeBuy.setBuyTime(rs.getTime("buy_time"));
+			storeBuy.setBuyTime(rs.getTimestamp("buy_time"));
 			
-			storeBuy.setStartTime(rs.getTime("start_time"));
-			storeBuy.setEndTime(rs.getTime("end_time"));
+			storeBuy.setStartTime(rs.getDate("start_time"));
+			storeBuy.setEndTime(rs.getDate("end_time"));
 			return storeBuy;
 		}
 	};
@@ -43,21 +43,21 @@ public class StoreBuyRepository {
 	private final static String T_STORE_BUY_COLUMN = " id, store_id, staff_num, price, buy_time, start_time, end_time ";
 		
 	public void addStoreBuy(StoreBuy storeBuy) {
-		String sql = "INSERT INTO t_store_buy (" + T_STORE_BUY_COLUMN + ") "
-				+ "VALUES (:id, :storeId, :staffNum, :price, NOW(), :startTime, :endTime)";
+		String sql = "INSERT INTO t_store_buy (" + T_STORE_BUY_COLUMN + ")"
+				+ " VALUES (:id, :storeId, :staffNum, :price, NOW(), :startTime, :endTime)";
 		template.update(sql, new BeanPropertySqlParameterSource(storeBuy));
 	}
 	
 	public List<StoreBuy> getStoreBuyByStoreId(Long id) {
-		String sql = "SELECT " + T_STORE_BUY_COLUMN + " FROM t_store_buy "
-				+ "WHERE store_id = :storeId  ORDER BY end_time DESC";
+		String sql = "SELECT " + T_STORE_BUY_COLUMN + " FROM t_store_buy"
+				+ " WHERE store_id = :storeId  ORDER BY end_time DESC";
 		return template.query(sql, Collections.singletonMap("storeId", id), storeBuyMapper);
 	}
 
 	public Integer getStaffNum(Long id) {
 		String sql = "SELECT SUM(staff_num) FROM t_store_buy"
-				+ "WHERE store_id = :storeId "
-				+ "AND CURRENT_DATE BETWEEN start_time AND end_time";
+				+ " WHERE store_id = :storeId"
+				+ " AND CURRENT_DATE BETWEEN start_time AND end_time";
 		return template.queryForObject(sql, Collections.singletonMap("storeId", id), Integer.class);
 	}
 	
@@ -65,8 +65,8 @@ public class StoreBuyRepository {
 	 * 取10天内要过期的购买信息
 	 */
 	public List<StoreBuy> getExpStoreBuy() {
-		String sql = "SELECT " + T_STORE_BUY_COLUMN + " FROM t_store_buy "
-				+ "WHERE end_time BETWEEN CURRENT_DATE AND DATE_ADD(CURRENT_DATE, INTERVAL 10 DAY)";
+		String sql = "SELECT " + T_STORE_BUY_COLUMN + " FROM t_store_buy"
+				+ " WHERE end_time BETWEEN CURRENT_DATE AND DATE_ADD(CURRENT_DATE, INTERVAL 10 DAY)";
 		return template.query(sql, storeBuyMapper);
 	}
 
