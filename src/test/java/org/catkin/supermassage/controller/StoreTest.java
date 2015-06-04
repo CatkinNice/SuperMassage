@@ -20,6 +20,33 @@ public class StoreTest extends BaseTest {
 	StoreController sc;
 	
 	@Test
+	public void addStore() throws Exception {
+		Store store = new Store();
+		store.setName("Super Massage (深圳店)");
+		store.setPwd("123456");
+		
+		StoreBuy buy = new StoreBuy();
+		buy.setStaffNum(100);
+		buy.setPrice(100000);
+		
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(2015, 5, 3);
+		buy.setStartTime(calendar.getTime());
+		calendar.set(2016, 5, 3);
+		buy.setEndTime(calendar.getTime());
+		
+		store.setStoreBuy(buy);
+		store = sc.addOrEditStore(Json.toJson(store));
+		System.out.println(Json.toJson(store));
+	}
+
+	@Test
+	public void getStoreBuy() throws Exception {
+		Store store = sc.getStoreById(2001);
+		System.out.println(Json.toJson(store));
+	}
+	
+	@Test
 	public void addStoreBuy() throws Exception {
 		StoreBuy buy = new StoreBuy();
 		buy.setStoreId(1L);
@@ -29,7 +56,7 @@ public class StoreTest extends BaseTest {
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(2015, 5, 3);
 		buy.setStartTime(calendar.getTime());
-		calendar.set(2016, 5, 3, 23, 59, 59);
+		calendar.set(2016, 5, 3);
 		buy.setEndTime(calendar.getTime());
 		buy = sc.addStoreBuy(Json.toJson(buy));
 		System.out.println(Json.toJson(buy));
@@ -37,13 +64,8 @@ public class StoreTest extends BaseTest {
 	
 	@Test
 	public void getStoreBuys() throws Exception {
-		List<StoreBuy> list = sc.getStoreBuys(5);
+		List<StoreBuy> list = sc.getStoreBuys(2001);
 		System.out.println(list.get(0).getPrice());
 	}
 	
-	@Test
-	public void getStoreBuy() throws Exception {
-		Store store = sc.getStoreById(1);
-		System.out.println(Json.toJson(store));
-	}
 }

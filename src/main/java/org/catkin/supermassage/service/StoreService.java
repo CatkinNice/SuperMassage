@@ -5,6 +5,7 @@ import java.util.List;
 import org.catkin.supermassage.entity.PageResult;
 import org.catkin.supermassage.entity.QueryParam;
 import org.catkin.supermassage.entity.Store;
+import org.catkin.supermassage.entity.StoreBuy;
 import org.catkin.supermassage.repository.StoreBuyRepository;
 import org.catkin.supermassage.repository.StoreRepository;
 import org.catkin.supermassage.utils.ErrorType;
@@ -31,11 +32,22 @@ public class StoreService {
 			throw new LogicException(ErrorType.errorSameStore);
 		}
 		
+		boolean isAdd = false;
 		if (store.getId() == null) {
+			isAdd = true;
 			store.setId(Sequence.getNextId());
 		}
 		
 		sr.addOrEditStore(store);
+		store.setPwd(null);			//返回时清空密码
+		
+		if (isAdd && store.getStoreBuy() != null){
+			StoreBuy storeBuy = store.getStoreBuy();
+			storeBuy.setId(Sequence.getNextId());
+			storeBuy.setStoreId(store.getId());
+			sbr.addStoreBuy(storeBuy);
+			store.setStaffNum(storeBuy.getStaffNum());
+		}
 		return store;
 	}
 

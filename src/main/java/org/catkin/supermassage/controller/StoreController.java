@@ -59,7 +59,7 @@ public class StoreController {
 	}
 	
 	@RequestMapping(value = "/{id}/buy", method = RequestMethod.POST)
-	public List<StoreBuy> getStoreBuys(@PathVariable long id) throws Exception {
-		return sbs.getStoreBuys(id);
+	public List<StoreBuy> getStoreBuys(@PathVariable long storeId) throws Exception {
+		return sbs.getStoreBuys(storeId);
 	}
 }

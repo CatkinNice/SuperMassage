@@ -43,7 +43,7 @@ public class ControllerAspect {
 			}
 			
 			// 参数
-			String param = ", param:【";
+			String param = ", param:";
 			Object [] args = jp.getArgs();
 			Class<?>[] clzs = new Class<?>[args.length];
 			
@@ -77,7 +77,6 @@ public class ControllerAspect {
 			if (args.length > 0) {
 				info.append(param);
 				info.deleteCharAt(info.length() - 1);
-				info.append("】");
 			}
 		} catch (Exception ex) {
 			Log.error(ex);

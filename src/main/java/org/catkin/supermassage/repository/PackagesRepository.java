@@ -42,7 +42,7 @@ public class PackagesRepository {
 	};
 	
 	public void addOrEditPackage(Packages packages) {
-		String sql = "INSERT INTO packages (" + T_PACKAGES_COLUMN + ")"
+		String sql = "INSERT INTO t_packages (" + T_PACKAGES_COLUMN + ")"
 				+ " VALUES (:id, :storeId, :name, :storePrice, :appPrice, :timed, :remark)"
 				+ " ON DUPLICATE KEY UPDATE"
 				+ " `name` = :name, "
@@ -77,12 +77,16 @@ public class PackagesRepository {
 		if (key != null && key.trim().length() > 0) {
 			where += " AND `name` LIKE '%" + key + "%'";
 		}
-		
 		return where;
 	}
 
-	public Packages getPackage(String id) {
+	public Packages getPackage(Long id) {
 		String sql = "SELECT " + T_PACKAGES_COLUMN + " FROM t_packages WHERE id = :id";
 		return template.queryForObject(sql, Collections.singletonMap("id", id), packagesMapper);
+	}
+
+	public void delPackage(Long id) {
+		String sql = "DELETE FROM t_packages WHERE id = :id";
+		template.update(sql, Collections.singletonMap("id", id));
 	}
 }

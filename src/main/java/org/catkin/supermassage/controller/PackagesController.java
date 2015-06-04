@@ -37,7 +37,12 @@ public class PackagesController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public Packages getPackage(@PathVariable String id) {
+	public Packages getPackage(@PathVariable long id) {
 		return ps.getPackage(id);
+	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public void delPackage(@PathVariable long id) {
+		ps.delPackage(id);
 	}
 }

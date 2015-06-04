@@ -13,14 +13,14 @@ public class Staff extends QueryParam {
 	private String name;			//员工名字
 	
 	private String icon;			//员工头像
-	private Boolean sex;			//性别（false:男，true:女）
+	private Boolean gender;			//性别（false:男，true:女）
 	private Integer age;			//年龄
 	
 	private int experience;			//工作经验
 	private String job;				//岗位
 	private String remark;			//备注
 	
-	private int wokeStatus; 		//服务状态（0:空闲，1:服务中）
+	private Integer wokeStatus; 	//服务状态（0:空闲，1:服务中）
 	private List<Long> packages;	//员工可服务的项目ID
 
 	public Staff() {
@@ -58,12 +58,12 @@ public class Staff extends QueryParam {
 		this.icon = icon;
 	}
 
-	public Boolean isSex() {
-		return sex;
+	public Boolean getGender() {
+		return gender;
 	}
 
-	public void setSex(Boolean sex) {
-		this.sex = sex;
+	public void setGender(Boolean gender) {
+		this.gender = gender;
 	}
 
 	public Integer getAge() {
@@ -98,11 +98,11 @@ public class Staff extends QueryParam {
 		this.remark = remark;
 	}
 
-	public int getWokeStatus() {
+	public Integer getWokeStatus() {
 		return wokeStatus;
 	}
 
-	public void setWokeStatus(int wokeStatus) {
+	public void setWokeStatus(Integer wokeStatus) {
 		this.wokeStatus = wokeStatus;
 	}
 
