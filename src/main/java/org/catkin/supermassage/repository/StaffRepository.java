@@ -60,30 +60,46 @@ public class StaffRepository {
 	}
 	
 	public List<Staff> getStaffs(Staff staff) {
-		String key = staff.getKey();
 		Integer from = staff.getFrom();
 		Integer size = staff.getSize();
-		Integer wokeStatus = staff.getWokeStatus();
 		
-		String sql = "SELECT " + T_STAFF_COLUMN + " FROM t_staff "
-				+ "WHERE store_id = " + staff.getStoreId() + " ";
-		
-		if (key != null && key.trim().length() > 0) {
-			sql += "AND `name` LIKE '%" + key + "%' OR job LIKE '%" + key + "%' ";
-		}
-		if (wokeStatus != null){
-			sql += "AND woke_status = " + wokeStatus + " " ;
-		}
+		String sql = "SELECT " + T_STAFF_COLUMN + " FROM t_staff" + getStaffWhere(staff);
+				
 		if (size != null && size > 0){
-			sql += "LIMIT " + (from == null ? 0 : from) + "," + size;
+			sql += " LIMIT " + (from == null ? 0 : from) + "," + size;
 		}
 		
 		return template.query(sql, staffMapper);
+	}
+	
+	public int getStaffsCount(Staff staff) {
+		String sql = "SELECT COUNT(id) FROM t_staff" + getStaffWhere(staff);
+		return template.queryForObject(sql, Integer.class);
+	}
+	
+	private String getStaffWhere(Staff staff) {
+		String key = staff.getKey();
+		Integer wokeStatus = staff.getWokeStatus();
+		String where = " WHERE store_id = " + staff.getStoreId();
+		
+		if (key != null && key.trim().length() > 0) {
+			where += " AND `name` LIKE '%" + key + "%' OR job LIKE '%" + key + "%' ";
+		}
+		
+		if (wokeStatus != null){
+			where += " AND woke_status = " + wokeStatus + " " ;
+		}
+		return where;
 	}
 
 	public Staff getStaffById(String id) {
 		String sql = "SELECT " + T_STAFF_COLUMN + " FROM t_staff WHERE id = :id";
 		return template.queryForObject(sql, Collections.singletonMap("id", id), staffMapper);
+	}
+
+	public Integer getStaffNumByStoreId(Long storeId) {
+		String sql = "SELECT COUNT(id) FROM t_staff WHERE store_id = :storeId";
+		return template.queryForObject(sql, Collections.singletonMap("storeId", storeId), Integer.class);
 	}
 	
 }

@@ -1,8 +1,8 @@
 package org.catkin.supermassage.controller;
 
+import org.catkin.supermassage.entity.Packages;
 import org.catkin.supermassage.entity.PageResult;
-import org.catkin.supermassage.entity.Staff;
-import org.catkin.supermassage.service.StaffService;
+import org.catkin.supermassage.service.PackagesService;
 import org.catkin.supermassage.utils.Json;
 import org.catkin.supermassage.utils.RESTurl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,31 +13,31 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 员工服务
+ * 服务项目（商品）
  * @author Catkin_nice
  *
  */
 @RestController
-@RequestMapping(RESTurl.staff)
-public class StaffController {
+@RequestMapping(RESTurl.packages)
+public class PackagesController {
 	
 	@Autowired
-	private StaffService ss;
+	private PackagesService ps;
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public Staff addOrEditStaff(@RequestBody String json) throws Exception {
-		Staff staff = Json.parse(json, Staff.class);
-		ss.addOrEditStaff(staff);
-		return staff;
+	public Packages addOrEditPackage(@RequestBody String json) throws Exception {
+		Packages packages = Json.parse(json, Packages.class);
+		ps.addOrEditPackage(packages);
+		return packages;
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public PageResult getStaffs(@RequestBody String json) throws Exception {
-		return ss.getStaffs(Json.parse(json, Staff.class));
+	public PageResult getPackages(@RequestBody String json) throws Exception {
+		return ps.getPackages(Json.parse(json, Packages.class));
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public Staff getStaff(@PathVariable String id) {
-		return ss.getStaffById(id);
+	public Packages getPackage(@PathVariable String id) {
+		return ps.getPackage(id);
 	}
 }

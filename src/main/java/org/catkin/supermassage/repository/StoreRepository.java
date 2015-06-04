@@ -61,18 +61,34 @@ public class StoreRepository {
 	}
 
 	public List<Store> getStores(QueryParam param) {
-		String key = param.getKey();
 		Integer from = param.getFrom();
 		Integer size = param.getSize();
 		
-		String sql = "SELECT " + T_STORE_COLUMN + " FROM t_store ";
-		if (key != null && key.trim().length() > 0) {
-			sql += ("WHERE `name` LIKE '%" + key + "%' OR address LIKE '%" + key + "%' ");
-		}
+		String sql = "SELECT " + T_STORE_COLUMN + " FROM t_store" + getStoresWhere(param);
 		if (size != null && size > 0){
-			sql += ("LIMIT " + (from == null ? 0 : from) + "," + size);
+			sql += " LIMIT " + (from == null ? 0 : from) + "," + size;
 		}
 		return template.query(sql, storeMapper);
+	}
+
+	public int getStoresCount(QueryParam param) {
+		String sql = "SELECT COUNT(id) FROM t_store" + getStoresWhere(param);
+		return template.queryForObject(sql, Integer.class);
+	}
+	
+	private String getStoresWhere(QueryParam param) {
+		String key = param.getKey();
+		
+		String where = "";
+		if (key != null && key.trim().length() > 0) {
+			where = " WHERE `name` LIKE '%" + key + "%' OR address LIKE '%" + key + "%'";
+		}
+		return where;
+	}
+
+	public boolean checkSameStore(String name) {
+		String sql = "SELECT EXISTS (SELECT id FROM t_store WHERE `name` = :name)";
+		return template.queryForObject(sql, Collections.singletonMap("name", name), Boolean.class);
 	}
 
 }

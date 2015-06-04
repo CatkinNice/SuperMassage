@@ -1,15 +1,18 @@
 package org.catkin.supermassage.entity;
 
-public class Packages {
-	private Long id;		//产品ID
-	private Long storeId;	//商铺ID
-	private String name;	//产品名称
+import java.util.List;
+
+public class Packages extends QueryParam {
+	private Long id;			//产品ID
+	private Long storeId;		//商铺ID
+	private String name;		//产品名称
 	
 	private float storePrice;	//商铺价格
 	private float appPrice;		//APP价格
 	private Integer timed;		//产品时长
 	
 	private String remark;		//备注
+	private List<Long> staffs;  //可服务员工ID
 
 	public Packages() {
 	}
@@ -68,6 +71,14 @@ public class Packages {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public List<Long> getStaffs() {
+		return staffs;
+	}
+
+	public void setStaffs(List<Long> staffs) {
+		this.staffs = staffs;
 	}
 	
 }

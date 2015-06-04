@@ -46,5 +46,4 @@ public class QueryParam {
 		this.key = key;
 	}
 	
-	
 }

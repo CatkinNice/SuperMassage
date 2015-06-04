@@ -2,6 +2,7 @@ package org.catkin.supermassage.controller;
 
 import java.util.List;
 
+import org.catkin.supermassage.entity.PageResult;
 import org.catkin.supermassage.entity.QueryParam;
 import org.catkin.supermassage.entity.Store;
 import org.catkin.supermassage.entity.StoreBuy;
@@ -39,7 +40,7 @@ public class StoreController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public List<Store> getStores(@RequestParam(required = false) String key, 
+	public PageResult getStores(@RequestParam(required = false) String key, 
 			@RequestParam(required = false) Integer from, 
 			@RequestParam(required = false) Integer size) {
 		return ss.getStores(new QueryParam(key, from, size));

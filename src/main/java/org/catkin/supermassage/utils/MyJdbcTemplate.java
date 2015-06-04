@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.EmptySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,16 @@ public class MyJdbcTemplate extends NamedParameterJdbcTemplate {
 	@Autowired
 	public MyJdbcTemplate(DataSource dataSource) {
 		super(dataSource);
+	}
+	
+	/**
+	 * 
+	 * @param sql SQL query to execute
+	 * @param requiredType container of arguments to bind to the query
+	 * @return the result object of the required type, or null in case of SQL NULL
+	 */
+	public <T> T queryForObject(String sql, Class<T> requiredType) {
+		return super.queryForObject(sql, EmptySqlParameterSource.INSTANCE, requiredType);
 	}
 
 	@Override

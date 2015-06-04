@@ -16,5 +16,13 @@ public enum ErrorType {
 	/**
 	 * 服务参数不符规范
 	 */
-	errorRequestData;
+	errorRequestData,
+	/**
+	 * 店铺员工数不足
+	 */
+	errorStaffOver, 
+	/**
+	 * 存在同名店铺
+	 */
+	errorSameStore,
 }
