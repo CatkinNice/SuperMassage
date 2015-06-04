@@ -67,11 +67,25 @@ public class StoreService {
 	}
 
 	public Store loginStore(Store store) {
-		// TODO Auto-generated method stub
-		return null;
+		Store dbStore = sr.getStoreByAccount(store.getAccount());
+		if (dbStore == null) {
+			throw new LogicException(ErrorType.errorNotAccount);
+		}
+		
+		if (!dbStore.getPwd().equals(store.getPwd())) {
+			throw new LogicException(ErrorType.errorPassword);
+		}
+		
+		//返回时清空密码
+		dbStore.setPwd(null);
+		return dbStore;
 	}
 
 	public void changePwd(Store store) {
-		// TODO Auto-generated method stub
+		Store dbStore = sr.getStoreById(store.getId(), true);
+		if (!dbStore.getPwd().equals(store.getPwd())) {
+			throw new LogicException(ErrorType.errorPassword);
+		}
+		sr.changePwd(store);
 	}
 }

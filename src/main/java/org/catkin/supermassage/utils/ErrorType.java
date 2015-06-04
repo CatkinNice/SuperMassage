@@ -28,5 +28,13 @@ public enum ErrorType {
 	/**
 	 * 帐号已存在
 	 */
-	errorSameAccount,
+	errorSameAccount, 
+	/**
+	 * 帐号不存在
+	 */
+	errorNotAccount, 
+	/**
+	 * 密码错误
+	 */
+	errorPassword,
 }

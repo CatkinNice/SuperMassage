@@ -55,6 +55,24 @@ public class StoreTest extends BaseTest {
 	}
 	
 	@Test
+	public void loginStore() throws Exception {
+		Store store = new Store();
+		store.setAccount("cakin");
+		store.setPwd("1234");
+		store = sc.loginStore(Json.toJson(store));
+		System.out.println(Json.toJson(store));
+	}
+	
+	@Test
+	public void changePwd() throws Exception {
+		Store store = new Store();
+		store.setId(1001L);
+		store.setPwd("123");
+		store.setNewPwd("123456");
+		sc.changePwd(Json.toJson(store));
+	}
+	
+	@Test
 	public void addStoreBuy() throws Exception {
 		StoreBuy buy = new StoreBuy();
 		buy.setStoreId(1L);

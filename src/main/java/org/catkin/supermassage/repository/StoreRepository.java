@@ -24,7 +24,13 @@ public class StoreRepository {
 	@Autowired
 	private MyJdbcTemplate template;
 	
-	private final static RowMapper<Store> storeMapper = new RowMapper<Store>() {
+	private static final class StoreMapper implements RowMapper<Store> {
+		private boolean displayPwd = false;
+		
+		public StoreMapper(boolean displayPwd) {
+			this.displayPwd = displayPwd;
+		}
+
 		@Override
 		public Store mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Store store = new Store();
@@ -37,6 +43,10 @@ public class StoreRepository {
 
 			store.setLongLatItude(rs.getString("long_lat_itude"));
 			store.setRemark(rs.getString("remark"));
+			
+			if (displayPwd) {
+				store.setPwd(rs.getString("pwd"));
+			}
 			return store;
 		}
 	};
@@ -44,8 +54,12 @@ public class StoreRepository {
 	private final static String T_STORE_COLUMN = " id, account, name, pwd, long_lat_itude, address, phone, remark ";
 	
 	public Store getStoreById(Long id) {
+		return getStoreById(id, false);
+	}
+	
+	public Store getStoreById(Long id, boolean displayPwd) {
 		String sql = "SELECT " + T_STORE_COLUMN + " FROM t_store WHERE id = :id";
-		return template.queryForObject(sql, Collections.singletonMap("id", id), storeMapper);
+		return template.queryForObject(sql, Collections.singletonMap("id", id), new StoreMapper(displayPwd));
 	}
 	
 	public void addOrEditStore(Store store) {
@@ -68,7 +82,7 @@ public class StoreRepository {
 		if (size != null && size > 0){
 			sql += " LIMIT " + (from == null ? 0 : from) + "," + size;
 		}
-		return template.query(sql, storeMapper);
+		return template.query(sql, new StoreMapper(false));
 	}
 
 	public int getStoresCount(QueryParam param) {
@@ -94,6 +108,16 @@ public class StoreRepository {
 	public boolean checkSameName(String name) {
 		String sql = "SELECT EXISTS (SELECT id FROM t_store WHERE `name` = :name)";
 		return template.queryForObject(sql, Collections.singletonMap("name", name), Boolean.class);
+	}
+
+	public Store getStoreByAccount(String account) {
+		String sql = "SELECT " + T_STORE_COLUMN + " FROM t_store WHERE account = :account";
+		return template.queryForObject(sql, Collections.singletonMap("account", account), new StoreMapper(true));
+	}
+
+	public void changePwd(Store store) {
+		String sql = "UPDATE t_store SET pwd = :newPwd WHERE id = :id";
+		template.update(sql, new BeanPropertySqlParameterSource(store));
 	}
 
 }
