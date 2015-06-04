@@ -2,6 +2,7 @@ package org.catkin.supermassage.service;
 
 import java.util.List;
 
+import org.catkin.supermassage.entity.QueryParam;
 import org.catkin.supermassage.entity.Store;
 import org.catkin.supermassage.repository.StoreBuyRepository;
 import org.catkin.supermassage.repository.StoreRepository;
@@ -36,7 +37,7 @@ public class StoreService {
 		return store;
 	}
 
-	public List<Store> getStores(String key, Integer from, Integer size) {
-		return sr.getStores(key, from, size);
+	public List<Store> getStores(QueryParam param) {
+		return sr.getStores(param);
 	}
 }

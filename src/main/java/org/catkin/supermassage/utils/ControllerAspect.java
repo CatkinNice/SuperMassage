@@ -21,10 +21,10 @@ public class ControllerAspect {
 		try {
 			result = jp.proceed();
 		} catch (LogicException e) {
-			Log.error(e);
+			Log.error(e.getError(), e);
 			throw e;
 		} catch (Throwable t) {
-			Log.error(t);
+			Log.error(ErrorType.error500, t);
 		}
 		return result;
 	}

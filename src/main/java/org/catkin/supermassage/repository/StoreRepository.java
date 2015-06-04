@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
+import org.catkin.supermassage.entity.QueryParam;
 import org.catkin.supermassage.entity.Store;
 import org.catkin.supermassage.utils.MyJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -48,7 +49,7 @@ public class StoreRepository {
 	
 	public void addOrEditStore(Store store) {
 		String sql = "INSERT INTO t_store (" + T_STORE_COLUMN + ") "
-				+ "VALUES (:id, :name, :pwd, :longLatItude, :address, :phone, :remark)"
+				+ "VALUES (:id, :name, :pwd, :longLatItude, :address, :phone, :remark) "
 				+ "ON DUPLICATE KEY UPDATE "
 				+ "name = :name, "
 				+ "pwd = :pwd, "
@@ -59,13 +60,17 @@ public class StoreRepository {
 		template.update(sql, new BeanPropertySqlParameterSource(store));
 	}
 
-	public List<Store> getStores(String key, Integer from, Integer size) {
+	public List<Store> getStores(QueryParam param) {
+		String key = param.getKey();
+		Integer from = param.getFrom();
+		Integer size = param.getSize();
+		
 		String sql = "SELECT " + T_STORE_COLUMN + " FROM t_store ";
 		if (key != null && key.trim().length() > 0) {
 			sql += ("WHERE `name` LIKE '%" + key + "%' OR address LIKE '%" + key + "%' ");
 		}
 		if (size != null && size > 0){
-			sql += (" LIMIT " + (from == null ? 0 : from) + "," + size);
+			sql += ("LIMIT " + (from == null ? 0 : from) + "," + size);
 		}
 		return template.query(sql, storeMapper);
 	}

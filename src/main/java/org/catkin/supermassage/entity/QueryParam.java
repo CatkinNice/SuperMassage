@@ -1,6 +1,11 @@
 package org.catkin.supermassage.entity;
 
-public abstract class QueryPageParam {
+public class QueryParam {
+	/**
+	 * search Key
+	 */
+	private String key;
+	
 	/**
 	 * 起始位置
 	 */
@@ -10,6 +15,15 @@ public abstract class QueryPageParam {
 	 * 获取记录数
 	 */
 	private Integer size;
+	
+	public QueryParam() {
+	}
+
+	public QueryParam(String key, Integer from, Integer size) {
+		this.key = key;
+		this.from = from;
+		this.size = size;
+	}
 
 	public Integer getFrom() {
 		return from;
@@ -22,6 +36,14 @@ public abstract class QueryPageParam {
 	public void setPageParam(Integer from, Integer size) {
 		this.from = from;
 		this.size = size;
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
 	}
 	
 	

@@ -35,7 +35,7 @@ public class Sequence {
 			bw.write(String.valueOf(index + CACHE_SIZE));
 			Log.info("getSequenceValue:" + index + ", cacheSize:" + CACHE_SIZE);
 		} catch (Exception ex) {
-			Log.error("[getSequenceValue]", ex);
+			Log.error(ErrorType.error500, ex);
 		} finally {
 			try {
 				if (br != null) br.close();

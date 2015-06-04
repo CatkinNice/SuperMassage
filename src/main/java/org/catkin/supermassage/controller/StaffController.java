@@ -1,8 +1,15 @@
 package org.catkin.supermassage.controller;
 
+import java.util.List;
+
+import org.catkin.supermassage.entity.Staff;
+import org.catkin.supermassage.service.StaffService;
+import org.catkin.supermassage.utils.Json;
 import org.catkin.supermassage.utils.RESTurl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,13 +24,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(RESTurl.staff)
 public class StaffController {
 	
-	@RequestMapping(method = RequestMethod.GET)
-	public String getStaffs() {
-		return "this is staff!...";
+	@Autowired
+	private StaffService ss;
+	
+	@RequestMapping(method = RequestMethod.PUT)
+	public Staff addOrEditStaff(@RequestBody String json) throws Exception {
+		Staff staff = Json.parse(json, Staff.class);
+		ss.addOrEditStaff(staff);
+		return staff;
+	}
+	
+	@RequestMapping(method = RequestMethod.POST)
+	public List<Staff> getStaffs(@RequestBody String json) throws Exception {
+		return ss.getStaffs(Json.parse(json, Staff.class));
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public String getStaff(@PathVariable String id) {
-		return "this is staff!..." + id;
+	public Staff getStaff(@PathVariable String id) {
+		return ss.getStaffById(id);
 	}
 }
