@@ -19,7 +19,6 @@ CREATE TABLE `t_store` (
   `address` varchar(200) default '' COMMENT '店铺地址',
   `phone` varchar(15) default '' COMMENT '电话',
   `remark` varchar(500) default '' COMMENT '备注',
-  `deleted` tinyint(1) NOT NULL default '0' COMMENT '删除状态(0:正常，1:删除)',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='店铺';
 
@@ -45,7 +44,7 @@ CREATE TABLE `t_user` (
   `account` varchar(20) NOT NULL COMMENT '用户帐号',
   `pwd` varchar(50) NOT NULL DEFAULT '' COMMENT '用户密码',
   `name` varchar(50) COMMENT '用户昵称',
-  `sex` bit(1) COMMENT '性别（男：0，女：1）',
+  `gender` bit(1) COMMENT '性别（男：0，女：1）',
   `age` tinyint(1) COMMENT '年龄',
   `icon` varchar(50) COMMENT '用户头像',
   `bank_id` varchar(50) COMMENT '支付帐号',
@@ -74,7 +73,7 @@ CREATE TABLE `t_staff` (
   `store_id` bigint(20) NOT NULL COMMENT '店铺ID',
   `name` varchar(20) NOT NULL COMMENT '员工名字',
   `icon` varchar(20) COMMENT '员工头像',
-  `sex` bit(1) COMMENT '性别（男：0，女：1）',
+  `gender` bit(1) COMMENT '性别（男：0，女：1）',
   `age` tinyint(1) COMMENT '年龄',
   `experience` tinyint(1) NOT NULL DEFAULT '1' COMMENT '工作经验(年)',
   `job` varchar(20) NOT NULL COMMENT '岗位',

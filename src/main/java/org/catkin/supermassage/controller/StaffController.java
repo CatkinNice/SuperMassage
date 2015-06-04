@@ -37,7 +37,12 @@ public class StaffController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public Staff getStaff(@PathVariable String id) {
+	public Staff getStaff(@PathVariable long id) {
 		return ss.getStaffById(id);
+	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public void delStaff(@PathVariable long id) {
+		ss.delStaffById(id);
 	}
 }

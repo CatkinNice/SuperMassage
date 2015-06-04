@@ -1,9 +1,11 @@
 package org.catkin.supermassage.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.catkin.supermassage.entity.PageResult;
 import org.catkin.supermassage.entity.Staff;
+import org.catkin.supermassage.entity.StaffPackages;
 import org.catkin.supermassage.repository.StaffRepository;
 import org.catkin.supermassage.repository.StoreBuyRepository;
 import org.catkin.supermassage.utils.ErrorType;
@@ -11,6 +13,7 @@ import org.catkin.supermassage.utils.LogicException;
 import org.catkin.supermassage.utils.Sequence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 /**
  * 
@@ -24,20 +27,36 @@ public class StaffService {
 	
 	@Autowired
 	private StoreBuyRepository sbr;
+	
+	@Autowired
+	private StaffPackagesRepository spr;
 
 	public void addOrEditStaff(Staff staff) {
 		if (staff.getId() == null) {
-			Integer staffNum = sbr.getStaffNum(staff.getId());
+			Integer staffNum = sbr.getStaffNum(staff.getStoreId());
 			Integer usedStaffNum = sr.getStaffNumByStoreId(staff.getStoreId());
-			if (staffNum > usedStaffNum) {
+			if (staffNum != null && staffNum > usedStaffNum) {
 				staff.setId(Sequence.getNextId());
+				if (staff.getWokeStatus() == null) {
+					staff.setWokeStatus(0);
+				}
 			} else {
 				throw new LogicException(ErrorType.errorStaffOver);
 			}
 		}
-		
-		//TODO 添加员工可服务项目
 		sr.addOrEditStaff(staff);
+		
+		//为员工添加可服务项目
+		if (!CollectionUtils.isEmpty(staff.getPackages())) {
+			Long staffId = staff.getId();
+			spr.delStaffPackagesByStaffId(staffId);
+			List<StaffPackages> staffPackages = new ArrayList<StaffPackages>();
+			
+			for (Long packagesId : staff.getPackages()) {
+				staffPackages.add(new StaffPackages(staffId, packagesId));
+			}
+			spr.addStaffPackages(staffPackages);
+		}
 	}
 	
 	public PageResult getStaffs(Staff staff) {
@@ -46,8 +65,12 @@ public class StaffService {
 		return new PageResult(data, totalSize);
 	}
 
-	public Staff getStaffById(String id) {
+	public Staff getStaffById(Long id) {
 		return sr.getStaffById(id);
+	}
+
+	public void delStaffById(Long id) {
+		sr.delStaffById(id);
 	}
 	
 	

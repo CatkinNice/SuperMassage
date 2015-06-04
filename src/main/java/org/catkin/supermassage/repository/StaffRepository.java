@@ -23,7 +23,7 @@ public class StaffRepository {
 	@Autowired
 	private MyJdbcTemplate template;
 	
-	private static final String T_STAFF_COLUMN = " id, store_id, `name`, icon, sex, age, experience, job, remark, woke_status ";
+	private static final String T_STAFF_COLUMN = " id, store_id, `name`, icon, gender, age, experience, job, remark, woke_status ";
 	private static final RowMapper<Staff> staffMapper = new RowMapper<Staff>() {
 		@Override
 		public Staff mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -33,7 +33,7 @@ public class StaffRepository {
 			
 			staff.setName(rs.getString("name"));
 			staff.setIcon(rs.getString("icon"));
-			staff.setSex(rs.getBoolean("sex"));
+			staff.setGender(rs.getBoolean("gender"));
 			
 			staff.setAge(rs.getInt("age"));
 			staff.setExperience(rs.getInt("experience"));
@@ -46,16 +46,17 @@ public class StaffRepository {
 	};
 	
 	public void addOrEditStaff(Staff staff) {
-		String sql = "INSERT INTO t_staff (" + T_STAFF_COLUMN + ") "
-				+ "VALUES (:id, :storeId, :name, :icon, :sex, :age, :experience, :job, :remark, :wokeStatus) "
-				+ "ON DUPLICATE KEY UPDATE "
-				+ "icon = :icon, "
-				+ "sex = :sex, "
-				+ "age = :age, "
-				+ "experience = :experience, "
-				+ "job = :job, "
-				+ "remark = :remark, "
-				+ "woke_status = :wokeStatus";
+		String sql = "INSERT INTO t_staff (" + T_STAFF_COLUMN + ")"
+				+ " VALUES (:id, :storeId, :name, :icon, :gender, :age, :experience, :job, :remark, :wokeStatus)"
+				+ " ON DUPLICATE KEY UPDATE"
+				+ " name = :name,"
+				+ " icon = :icon,"
+				+ " gender = :gender,"
+				+ " age = :age,"
+				+ " experience = :experience,"
+				+ " job = :job,"
+				+ " remark = :remark,"
+				+ " woke_status = :wokeStatus";
 		template.update(sql, new BeanPropertySqlParameterSource(staff));
 	}
 	
@@ -92,7 +93,7 @@ public class StaffRepository {
 		return where;
 	}
 
-	public Staff getStaffById(String id) {
+	public Staff getStaffById(Long id) {
 		String sql = "SELECT " + T_STAFF_COLUMN + " FROM t_staff WHERE id = :id";
 		return template.queryForObject(sql, Collections.singletonMap("id", id), staffMapper);
 	}
@@ -100,6 +101,11 @@ public class StaffRepository {
 	public Integer getStaffNumByStoreId(Long storeId) {
 		String sql = "SELECT COUNT(id) FROM t_staff WHERE store_id = :storeId";
 		return template.queryForObject(sql, Collections.singletonMap("storeId", storeId), Integer.class);
+	}
+
+	public void delStaffById(Long id) {
+		String sql = "DELETE FROM t_staff WHERE id = :id";
+		template.update(sql, Collections.singletonMap("id", id));
 	}
 	
 }

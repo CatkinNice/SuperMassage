@@ -41,5 +41,11 @@ public class StoreRepositoryTest extends BaseTest {
 		}
 	}
 	
+	@Test
+	public void getStaffNum() {
+		Integer staffNum = sbr.getStaffNum(2001L);
+		System.out.println("staffNum===" + staffNum);
+	}
+	
 }
 

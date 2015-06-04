@@ -12,6 +12,7 @@ public class Store {
 	
 	private String remark;			//备注
 	private Integer staffNum;		//员工数
+	private StoreBuy storeBuy;		//购买店铺服务
 
 	public Store() {
 	}
@@ -78,6 +79,14 @@ public class Store {
 
 	public void setStaffNum(Integer staffNum) {
 		this.staffNum = staffNum;
+	}
+
+	public StoreBuy getStoreBuy() {
+		return storeBuy;
+	}
+
+	public void setStoreBuy(StoreBuy storeBuy) {
+		this.storeBuy = storeBuy;
 	}
 	
 }
