@@ -2,10 +2,10 @@ package org.catkin.supermassage.controller;
 
 import java.util.List;
 
-import org.catkin.supermassage.entity.PageResult;
-import org.catkin.supermassage.entity.QueryParam;
 import org.catkin.supermassage.entity.Store;
 import org.catkin.supermassage.entity.StoreBuy;
+import org.catkin.supermassage.entity.param.PageResult;
+import org.catkin.supermassage.entity.param.QueryParam;
 import org.catkin.supermassage.service.StoreBuyService;
 import org.catkin.supermassage.service.StoreService;
 import org.catkin.supermassage.utils.Json;
@@ -61,5 +61,17 @@ public class StoreController {
 	@RequestMapping(value = "/{id}/buy", method = RequestMethod.POST)
 	public List<StoreBuy> getStoreBuys(@PathVariable long storeId) throws Exception {
 		return sbs.getStoreBuys(storeId);
+	}
+
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public Store loginStore(@RequestBody String json) throws Exception {
+		Store store = Json.parse(json, Store.class);
+		return ss.loginStore(store);
+	}
+	
+	@RequestMapping(value = "/changepwd", method = RequestMethod.POST)
+	public void changePwd(@RequestBody String json) throws Exception {
+		Store store = Json.parse(json, Store.class);
+		ss.changePwd(store);
 	}
 }

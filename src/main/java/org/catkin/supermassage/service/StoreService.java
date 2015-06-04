@@ -2,10 +2,10 @@ package org.catkin.supermassage.service;
 
 import java.util.List;
 
-import org.catkin.supermassage.entity.PageResult;
-import org.catkin.supermassage.entity.QueryParam;
 import org.catkin.supermassage.entity.Store;
 import org.catkin.supermassage.entity.StoreBuy;
+import org.catkin.supermassage.entity.param.PageResult;
+import org.catkin.supermassage.entity.param.QueryParam;
 import org.catkin.supermassage.repository.StoreBuyRepository;
 import org.catkin.supermassage.repository.StoreRepository;
 import org.catkin.supermassage.utils.ErrorType;
@@ -28,7 +28,10 @@ public class StoreService {
 	private StoreBuyRepository sbr;
 	
 	public Store addOrEditStore(Store store) {
-		if (sr.checkSameStore(store.getName())) {
+		if (sr.checkSameAccount(store.getAccount())) {
+			throw new LogicException(ErrorType.errorSameAccount);
+		}
+		if (sr.checkSameName(store.getName())) {
 			throw new LogicException(ErrorType.errorSameStore);
 		}
 		
@@ -61,5 +64,14 @@ public class StoreService {
 		List<Store> data = sr.getStores(param);
 		int totalSize = sr.getStoresCount(param);
 		return new PageResult(data, totalSize);
+	}
+
+	public Store loginStore(Store store) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void changePwd(Store store) {
+		// TODO Auto-generated method stub
 	}
 }

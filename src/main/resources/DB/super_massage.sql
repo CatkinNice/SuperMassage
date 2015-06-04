@@ -13,6 +13,7 @@ USE super_massage;
 DROP TABLE IF EXISTS `t_store`;
 CREATE TABLE `t_store` (
   `id` bigint(20) NOT NULL COMMENT '店铺ID',
+  `account` varchar(50) NOT NULL COMMENT '店铺登录帐号',
   `name` varchar(50) NOT NULL COMMENT '店铺名称',
   `pwd` varchar(50) NOT NULL default '' COMMENT '店铺管理密码',
   `long_lat_itude` varchar(50) default '' COMMENT '店铺经纬度',

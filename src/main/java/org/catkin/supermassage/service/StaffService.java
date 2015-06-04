@@ -3,9 +3,9 @@ package org.catkin.supermassage.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.catkin.supermassage.entity.PageResult;
 import org.catkin.supermassage.entity.Staff;
 import org.catkin.supermassage.entity.StaffPackages;
+import org.catkin.supermassage.entity.param.PageResult;
 import org.catkin.supermassage.repository.StaffRepository;
 import org.catkin.supermassage.repository.StoreBuyRepository;
 import org.catkin.supermassage.utils.ErrorType;
@@ -37,12 +37,13 @@ public class StaffService {
 			Integer usedStaffNum = sr.getStaffNumByStoreId(staff.getStoreId());
 			if (staffNum != null && staffNum > usedStaffNum) {
 				staff.setId(Sequence.getNextId());
-				if (staff.getWokeStatus() == null) {
-					staff.setWokeStatus(0);
-				}
 			} else {
 				throw new LogicException(ErrorType.errorStaffOver);
 			}
+		}
+		
+		if (staff.getWokeStatus() == null) {
+			staff.setWokeStatus(0);
 		}
 		sr.addOrEditStaff(staff);
 		

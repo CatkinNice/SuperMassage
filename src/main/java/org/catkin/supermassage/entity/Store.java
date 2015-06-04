@@ -13,6 +13,9 @@ public class Store {
 	private String remark;			//备注
 	private Integer staffNum;		//员工数
 	private StoreBuy storeBuy;		//购买店铺服务
+	
+	private String account;			//店铺登录帐号
+	private String newPwd;			//新密码（修改密码时使用）
 
 	public Store() {
 	}
@@ -87,6 +90,22 @@ public class Store {
 
 	public void setStoreBuy(StoreBuy storeBuy) {
 		this.storeBuy = storeBuy;
+	}
+
+	public String getAccount() {
+		return account;
+	}
+
+	public void setAccount(String account) {
+		this.account = account;
+	}
+
+	public String getNewPwd() {
+		return newPwd;
+	}
+
+	public void setNewPwd(String newPwd) {
+		this.newPwd = newPwd;
 	}
 	
 }

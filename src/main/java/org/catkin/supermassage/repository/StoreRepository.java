@@ -5,8 +5,8 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
-import org.catkin.supermassage.entity.QueryParam;
 import org.catkin.supermassage.entity.Store;
+import org.catkin.supermassage.entity.param.QueryParam;
 import org.catkin.supermassage.utils.MyJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,18 +29,19 @@ public class StoreRepository {
 		public Store mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Store store = new Store();
 			store.setId(rs.getLong("id"));
-			store.setName(rs.getString("name"));
+			store.setAccount(rs.getString("account"));
 			
+			store.setName(rs.getString("name"));
 			store.setPhone(rs.getString("phone"));
 			store.setAddress(rs.getString("address"));
+
 			store.setLongLatItude(rs.getString("long_lat_itude"));
-			
 			store.setRemark(rs.getString("remark"));
 			return store;
 		}
 	};
 	
-	private final static String T_STORE_COLUMN = " id, name, pwd, long_lat_itude, address, phone, remark ";
+	private final static String T_STORE_COLUMN = " id, account, name, pwd, long_lat_itude, address, phone, remark ";
 	
 	public Store getStoreById(Long id) {
 		String sql = "SELECT " + T_STORE_COLUMN + " FROM t_store WHERE id = :id";
@@ -49,10 +50,9 @@ public class StoreRepository {
 	
 	public void addOrEditStore(Store store) {
 		String sql = "INSERT INTO t_store (" + T_STORE_COLUMN + ") "
-				+ "VALUES (:id, :name, :pwd, :longLatItude, :address, :phone, :remark) "
+				+ "VALUES (:id, :account, :name, :pwd, :longLatItude, :address, :phone, :remark) "
 				+ "ON DUPLICATE KEY UPDATE "
 				+ "name = :name, "
-				+ "pwd = :pwd, "
 				+ "long_lat_itude = :longLatItude, "
 				+ "address = :address, "
 				+ "phone = :phone, "
@@ -81,12 +81,17 @@ public class StoreRepository {
 		
 		String where = "";
 		if (key != null && key.trim().length() > 0) {
-			where = " WHERE `name` LIKE '%" + key + "%' OR address LIKE '%" + key + "%'";
+			where = " WHERE `name` LIKE '%" + key + "%' OR account LIKE '%" + key + "%' OR address LIKE '%" + key + "%'";
 		}
 		return where;
 	}
+	
+	public boolean checkSameAccount(String account) {
+		String sql = "SELECT EXISTS (SELECT id FROM t_store WHERE account = :account)";
+		return template.queryForObject(sql, Collections.singletonMap("account", account), Boolean.class);
+	}
 
-	public boolean checkSameStore(String name) {
+	public boolean checkSameName(String name) {
 		String sql = "SELECT EXISTS (SELECT id FROM t_store WHERE `name` = :name)";
 		return template.queryForObject(sql, Collections.singletonMap("name", name), Boolean.class);
 	}

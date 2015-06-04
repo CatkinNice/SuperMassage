@@ -6,6 +6,7 @@ import java.util.List;
 import org.catkin.supermassage.BaseTest;
 import org.catkin.supermassage.entity.Store;
 import org.catkin.supermassage.entity.StoreBuy;
+import org.catkin.supermassage.entity.param.PageResult;
 import org.catkin.supermassage.utils.Json;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,8 @@ public class StoreTest extends BaseTest {
 	@Test
 	public void addStore() throws Exception {
 		Store store = new Store();
-		store.setName("Super Massage (深圳店)");
+		store.setAccount("nice");
+		store.setName("Super Massage (武冈店)");
 		store.setPwd("123456");
 		
 		StoreBuy buy = new StoreBuy();
@@ -39,10 +41,16 @@ public class StoreTest extends BaseTest {
 		store = sc.addOrEditStore(Json.toJson(store));
 		System.out.println(Json.toJson(store));
 	}
+	
+	@Test
+	public void getStores() throws Exception {
+		PageResult result = sc.getStores(null, null, null);
+		System.out.println(Json.toJson(result));
+	}
 
 	@Test
 	public void getStoreBuy() throws Exception {
-		Store store = sc.getStoreById(2001);
+		Store store = sc.getStoreById(9001);
 		System.out.println(Json.toJson(store));
 	}
 	

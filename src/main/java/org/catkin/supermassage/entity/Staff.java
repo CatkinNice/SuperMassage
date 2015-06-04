@@ -2,6 +2,8 @@ package org.catkin.supermassage.entity;
 
 import java.util.List;
 
+import org.catkin.supermassage.entity.param.QueryParam;
+
 /**
  * 
  * @author Catkin_nice

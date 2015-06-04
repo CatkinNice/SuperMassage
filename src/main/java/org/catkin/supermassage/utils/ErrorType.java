@@ -24,5 +24,9 @@ public enum ErrorType {
 	/**
 	 * 存在同名店铺
 	 */
-	errorSameStore,
+	errorSameStore, 
+	/**
+	 * 帐号已存在
+	 */
+	errorSameAccount,
 }

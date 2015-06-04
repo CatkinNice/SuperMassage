@@ -1,7 +1,7 @@
 package org.catkin.supermassage.controller;
 
-import org.catkin.supermassage.entity.PageResult;
 import org.catkin.supermassage.entity.Staff;
+import org.catkin.supermassage.entity.param.PageResult;
 import org.catkin.supermassage.service.StaffService;
 import org.catkin.supermassage.utils.Json;
 import org.catkin.supermassage.utils.RESTurl;
