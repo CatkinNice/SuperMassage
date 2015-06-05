@@ -27,4 +27,9 @@ public interface RESTurl {
 	 * 服务项目（商品）
 	 */
 	String packages = "/packages";
+	
+	/**
+	 * 用户
+	 */
+	String user = "/user";
 }

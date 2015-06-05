@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import org.catkin.supermassage.BaseTest;
 import org.catkin.supermassage.entity.Packages;
-import org.catkin.supermassage.entity.param.PageResult;
+import org.catkin.supermassage.entity.model.PageResult;
 import org.catkin.supermassage.utils.Json;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

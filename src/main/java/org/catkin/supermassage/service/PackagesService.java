@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.catkin.supermassage.entity.Packages;
 import org.catkin.supermassage.entity.StaffPackages;
-import org.catkin.supermassage.entity.param.PageResult;
+import org.catkin.supermassage.entity.model.PageResult;
 import org.catkin.supermassage.repository.PackagesRepository;
 import org.catkin.supermassage.utils.Sequence;
 import org.springframework.beans.factory.annotation.Autowired;

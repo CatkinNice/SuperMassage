@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.catkin.supermassage.entity.Store;
 import org.catkin.supermassage.entity.StoreBuy;
-import org.catkin.supermassage.entity.param.PageResult;
-import org.catkin.supermassage.entity.param.QueryParam;
+import org.catkin.supermassage.entity.model.PageResult;
+import org.catkin.supermassage.entity.model.QueryParam;
 import org.catkin.supermassage.repository.StoreBuyRepository;
 import org.catkin.supermassage.repository.StoreRepository;
 import org.catkin.supermassage.utils.ErrorType;
@@ -66,7 +66,7 @@ public class StoreService {
 		return new PageResult(data, totalSize);
 	}
 
-	public Store loginStore(Store store) {
+	public Store storeLogin(Store store) {
 		Store dbStore = sr.getStoreByAccount(store.getAccount());
 		if (dbStore == null) {
 			throw new LogicException(ErrorType.errorNotAccount);

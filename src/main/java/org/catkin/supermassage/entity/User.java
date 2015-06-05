@@ -5,13 +5,15 @@ public class User {
 	private String account;		//用户帐号
 	private String name;		//用户昵称
 	
-	private boolean sex;		//性别（false:男，true:女）
+	private Boolean gender;		//性别（false:男，true:女）
 	private Integer age;		//年龄
 	private String icon;		//头像
 	
 	private String pwd;			//密码
 	private String bankId;		//支付帐号
 	private String remark;		//备注
+	
+	private String newPwd;		//新密码（修改密码使用）
 	
 	public User() {
 	}
@@ -40,12 +42,12 @@ public class User {
 		this.name = name;
 	}
 
-	public boolean isSex() {
-		return sex;
+	public Boolean getGender() {
+		return gender;
 	}
 
-	public void setSex(boolean sex) {
-		this.sex = sex;
+	public void setGender(Boolean gender) {
+		this.gender = gender;
 	}
 
 	public Integer getAge() {
@@ -86,6 +88,14 @@ public class User {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public String getNewPwd() {
+		return newPwd;
+	}
+
+	public void setNewPwd(String newPwd) {
+		this.newPwd = newPwd;
 	}
 	
 }

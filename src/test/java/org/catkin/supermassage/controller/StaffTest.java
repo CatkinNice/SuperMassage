@@ -5,7 +5,7 @@ import java.util.Arrays;
 import org.junit.Test;
 import org.catkin.supermassage.BaseTest;
 import org.catkin.supermassage.entity.Staff;
-import org.catkin.supermassage.entity.param.PageResult;
+import org.catkin.supermassage.entity.model.PageResult;
 import org.catkin.supermassage.utils.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 

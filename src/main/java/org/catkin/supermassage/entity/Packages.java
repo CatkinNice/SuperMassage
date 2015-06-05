@@ -2,7 +2,7 @@ package org.catkin.supermassage.entity;
 
 import java.util.List;
 
-import org.catkin.supermassage.entity.param.QueryParam;
+import org.catkin.supermassage.entity.model.QueryParam;
 
 public class Packages extends QueryParam {
 	private Long id;			//产品ID

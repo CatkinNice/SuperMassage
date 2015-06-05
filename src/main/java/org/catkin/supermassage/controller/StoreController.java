@@ -4,10 +4,11 @@ import java.util.List;
 
 import org.catkin.supermassage.entity.Store;
 import org.catkin.supermassage.entity.StoreBuy;
-import org.catkin.supermassage.entity.param.PageResult;
-import org.catkin.supermassage.entity.param.QueryParam;
+import org.catkin.supermassage.entity.model.PageResult;
+import org.catkin.supermassage.entity.model.QueryParam;
 import org.catkin.supermassage.service.StoreBuyService;
 import org.catkin.supermassage.service.StoreService;
+import org.catkin.supermassage.utils.ConstantsStatus;
 import org.catkin.supermassage.utils.Json;
 import org.catkin.supermassage.utils.RESTurl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,7 @@ public class StoreController {
 		return ss.getStoreById(id);
 	}
 	
-	@RequestMapping(value = "/buy", method = RequestMethod.POST)
+	@RequestMapping(value = "/buy", method = RequestMethod.PUT)
 	public StoreBuy addStoreBuy(@RequestBody String json) throws Exception {
 		StoreBuy storeBuy = Json.parse(json, StoreBuy.class);
 		sbs.addStoreBuy(storeBuy);
@@ -64,14 +65,15 @@ public class StoreController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public Store loginStore(@RequestBody String json) throws Exception {
+	public Store storeLogin(@RequestBody String json) throws Exception {
 		Store store = Json.parse(json, Store.class);
-		return ss.loginStore(store);
+		return ss.storeLogin(store);
 	}
 	
 	@RequestMapping(value = "/changepwd", method = RequestMethod.POST)
-	public void changePwd(@RequestBody String json) throws Exception {
+	public String changePwd(@RequestBody String json) throws Exception {
 		Store store = Json.parse(json, Store.class);
 		ss.changePwd(store);
+		return ConstantsStatus.SUCCESS;
 	}
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.catkin.supermassage.entity.Staff;
 import org.catkin.supermassage.entity.StaffPackages;
-import org.catkin.supermassage.entity.param.PageResult;
+import org.catkin.supermassage.entity.model.PageResult;
 import org.catkin.supermassage.repository.StaffRepository;
 import org.catkin.supermassage.repository.StoreBuyRepository;
 import org.catkin.supermassage.utils.ErrorType;

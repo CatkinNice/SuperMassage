@@ -1,4 +1,4 @@
-package org.catkin.supermassage.entity.param;
+package org.catkin.supermassage.entity.model;
 
 public class QueryParam {
 	/**

@@ -1,8 +1,9 @@
 package org.catkin.supermassage.controller;
 
 import org.catkin.supermassage.entity.Staff;
-import org.catkin.supermassage.entity.param.PageResult;
+import org.catkin.supermassage.entity.model.PageResult;
 import org.catkin.supermassage.service.StaffService;
+import org.catkin.supermassage.utils.ConstantsStatus;
 import org.catkin.supermassage.utils.Json;
 import org.catkin.supermassage.utils.RESTurl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,8 @@ public class StaffController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public void delStaff(@PathVariable long id) {
+	public String delStaff(@PathVariable long id) {
 		ss.delStaffById(id);
+		return ConstantsStatus.SUCCESS;
 	}
 }

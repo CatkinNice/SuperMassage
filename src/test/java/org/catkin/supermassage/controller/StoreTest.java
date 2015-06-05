@@ -6,7 +6,7 @@ import java.util.List;
 import org.catkin.supermassage.BaseTest;
 import org.catkin.supermassage.entity.Store;
 import org.catkin.supermassage.entity.StoreBuy;
-import org.catkin.supermassage.entity.param.PageResult;
+import org.catkin.supermassage.entity.model.PageResult;
 import org.catkin.supermassage.utils.Json;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +59,7 @@ public class StoreTest extends BaseTest {
 		Store store = new Store();
 		store.setAccount("cakin");
 		store.setPwd("1234");
-		store = sc.loginStore(Json.toJson(store));
+		store = sc.storeLogin(Json.toJson(store));
 		System.out.println(Json.toJson(store));
 	}
 	
