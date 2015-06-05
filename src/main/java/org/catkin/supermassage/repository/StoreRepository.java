@@ -23,8 +23,34 @@ public class StoreRepository {
 	
 	@Autowired
 	private MyJdbcTemplate template;
-	
-	private final static String T_STORE_COLUMN = " id, account, name, pwd, long_lat_itude, address, phone, remark ";
+	private static final String T_STORE_COLUMN = " id, account, name, pwd, long_lat_itude, address, phone, remark ";
+	private static final class StoreMapper implements RowMapper<Store> {
+		private boolean displayPwd = false;
+		
+		public StoreMapper() {
+			super();
+		}
+
+		public StoreMapper(boolean displayPwd) {
+			this.displayPwd = displayPwd;
+		}
+
+		@Override
+		public Store mapRow(ResultSet rs, int rowNum) throws SQLException {
+			Store store = new Store();
+			store.setId(rs.getLong("id"));
+			store.setAccount(rs.getString("account"));
+			if (displayPwd) store.setPwd(rs.getString("pwd"));
+			
+			store.setName(rs.getString("name"));
+			store.setPhone(rs.getString("phone"));
+			store.setAddress(rs.getString("address"));
+			store.setLongLatItude(rs.getString("long_lat_itude"));
+			
+			store.setRemark(rs.getString("remark"));
+			return store;
+		}
+	}
 	
 	public Store getStoreById(Long id) {
 		return getStoreById(id, false);
@@ -93,32 +119,4 @@ public class StoreRepository {
 		template.update(sql, new BeanPropertySqlParameterSource(store));
 	}
 	
-	private static final class StoreMapper implements RowMapper<Store> {
-		private boolean displayPwd = false;
-		
-		public StoreMapper() {
-			super();
-		}
-
-		public StoreMapper(boolean displayPwd) {
-			this.displayPwd = displayPwd;
-		}
-
-		@Override
-		public Store mapRow(ResultSet rs, int rowNum) throws SQLException {
-			Store store = new Store();
-			store.setId(rs.getLong("id"));
-			store.setAccount(rs.getString("account"));
-			if (displayPwd) store.setPwd(rs.getString("pwd"));
-			
-			store.setName(rs.getString("name"));
-			store.setPhone(rs.getString("phone"));
-			store.setAddress(rs.getString("address"));
-			store.setLongLatItude(rs.getString("long_lat_itude"));
-			
-			store.setRemark(rs.getString("remark"));
-			return store;
-		}
-	}
-
 }

@@ -32,4 +32,9 @@ public interface RESTurl {
 	 * 用户
 	 */
 	String user = "/user";
+	
+	/**
+	 * 订单
+	 */
+	String order = "/order";
 }

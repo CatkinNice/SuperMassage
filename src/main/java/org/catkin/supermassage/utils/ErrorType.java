@@ -37,4 +37,8 @@ public enum ErrorType {
 	 * 密码错误
 	 */
 	errorPassword,
+	/**
+	 * 预约时间不可用
+	 */
+	errorPlanTime,
 }
