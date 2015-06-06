@@ -7,6 +7,7 @@ import org.catkin.supermassage.entity.Packages;
 import org.catkin.supermassage.entity.StaffPackages;
 import org.catkin.supermassage.entity.model.PageResult;
 import org.catkin.supermassage.repository.PackagesRepository;
+import org.catkin.supermassage.repository.StaffPackagesRepository;
 import org.catkin.supermassage.utils.Sequence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

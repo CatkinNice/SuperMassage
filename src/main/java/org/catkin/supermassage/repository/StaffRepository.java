@@ -10,6 +10,7 @@ import org.catkin.supermassage.utils.MyJdbcTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -84,11 +85,11 @@ public class StaffRepository {
 		String where = " WHERE store_id = " + staff.getStoreId();
 		
 		if (key != null && key.trim().length() > 0) {
-			where += " AND `name` LIKE '%" + key + "%' OR job LIKE '%" + key + "%' ";
+			where += " AND `name` LIKE '%" + key + "%' OR job LIKE '%" + key + "%'";
 		}
 		
 		if (wokeStatus != null){
-			where += " AND woke_status = " + wokeStatus + " " ;
+			where += " AND woke_status = " + wokeStatus;
 		}
 		return where;
 	}
@@ -106,6 +107,15 @@ public class StaffRepository {
 	public void delStaffById(Long id) {
 		String sql = "DELETE FROM t_staff WHERE id = :id";
 		template.update(sql, Collections.singletonMap("id", id));
+	}
+	
+	public void editWokeStatus(Staff... staffs) {
+		String sql = "UPDATE t_staff SET woke_status = :wokeStatus WHERE id = :id";
+		SqlParameterSource[] batchValues = new SqlParameterSource[staffs.length];
+		for (int i = 0; i < batchValues.length; i++) {
+			batchValues[i] = new BeanPropertySqlParameterSource(staffs[i]);
+		}
+		template.batchUpdate(sql, batchValues);
 	}
 	
 }

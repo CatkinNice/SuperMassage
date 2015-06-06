@@ -2,6 +2,8 @@ package org.catkin.supermassage.service;
 
 import org.catkin.supermassage.entity.Order;
 import org.catkin.supermassage.repository.OrderRepository;
+import org.catkin.supermassage.repository.StaffRepository;
+import org.catkin.supermassage.utils.ConstantsStatus;
 import org.catkin.supermassage.utils.ErrorType;
 import org.catkin.supermassage.utils.LogicException;
 import org.catkin.supermassage.utils.Sequence;
@@ -18,19 +20,44 @@ public class OrderService {
 	
 	@Autowired
 	private OrderRepository or;
+	
+	@Autowired
+	private StaffRepository sr;
 
-	public void addOrEditOrder(Order order) {
+	public String addOrEditOrder(Order order) {
 		if (order.getId() == null) {
-			order.setId(Sequence.getNextId());
+			order.setId(Sequence.getNextOrderId());
+			order.setPayType(0);
+			order.setDeleted(0);
+			order.setPayStatus(false);
 		}
 		
-		if (order.getPlanStaffId() != null && order.getPlanTime() != null) {
-			if (!or.checkPlanTime(order.getPlanStaffId(), order.getPlanTime())) {
-				throw new LogicException(ErrorType.errorPlanTime);
+		if (order.getPlanTime() != null) {
+			if (order.getPlanStaff().getId() != null) {
+				if (or.checkPlanTime(order)) {
+					//预约时间不可用
+					throw new LogicException(ErrorType.errorPlanTime);
+				}
+			} else {
+				//TODO 随机分配员工
 			}
 		}
-		
 		or.addOrEditOrder(order);
+		return order.getId().substring(0, 6);
+	}
+
+	public String checkPlan(Order order) {
+		if (or.checkPlanTime(order)) {
+			//			预约时间不可用
+			throw new LogicException(ErrorType.errorPlanTime);
+		}
+		return ConstantsStatus.SUCCESS;
+	}
+
+
+	public Order getOrderById(String id) {
+//		OrderInfoResult result =  or.getOrderById(id);
+		return null;
 	}
 	
 }

@@ -1,4 +1,4 @@
-package org.catkin.supermassage.service;
+package org.catkin.supermassage.repository;
 
 import java.util.Collections;
 import java.util.List;

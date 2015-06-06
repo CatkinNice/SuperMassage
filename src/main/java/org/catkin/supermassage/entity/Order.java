@@ -8,32 +8,31 @@ import java.util.Date;
  *
  */
 public class Order {
-	private Long id;				//订单ID
+	private String id;				//订单ID
 	private Long storeId;			//商铺ID
 	private Long userId;			//用户ID
-	private Long packageId;			//商品ID
+	private Packages packages;		//商品对象
 	
-	private float appPrice;			//APP订单总价
-	private float storePrice;		//商铺订单总价
-	private Long planStaffId;		//预约员工ID
-	private Long usedStaffId;		//服务员工ID
-	
+	private Staff planStaff;		//预约员工对象
+	private Staff usedStaff;		//服务员工对象	
 	private Date planTime;			//预约时间
 	private Date usedTime;			//使用时间
-	private String payId;			//支付订单号（支付宝号）
-	private int payType;			//支付类型（0：到店支付，1：在线支付）
 	
-	private boolean payStatus;		//支付状态（0：未支付，1：已支付）
-	private int deleted;			//删除状态（0：正常，1：用户删除）
+	private String payId;			//支付订单号（支付宝号）
+	private Integer payType;		//支付类型（0：到店支付，1：在线支付）
+	private Boolean payStatus;		//支付状态（0：未支付，1：已支付）
+	private Integer deleted;		//删除状态（0：正常，1：用户删除）
+	
+	private String storeName;		//店铺名称
 	
 	public Order() {
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -51,46 +50,6 @@ public class Order {
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
-	}
-
-	public Long getPackageId() {
-		return packageId;
-	}
-
-	public void setPackageId(Long packageId) {
-		this.packageId = packageId;
-	}
-
-	public float getAppPrice() {
-		return appPrice;
-	}
-
-	public void setAppPrice(float appPrice) {
-		this.appPrice = appPrice;
-	}
-
-	public float getStorePrice() {
-		return storePrice;
-	}
-
-	public void setStorePrice(float storePrice) {
-		this.storePrice = storePrice;
-	}
-
-	public Long getPlanStaffId() {
-		return planStaffId;
-	}
-
-	public void setPlanStaffId(Long planStaffId) {
-		this.planStaffId = planStaffId;
-	}
-
-	public Long getUsedStaffId() {
-		return usedStaffId;
-	}
-
-	public void setUsedStaffId(Long usedStaffId) {
-		this.usedStaffId = usedStaffId;
 	}
 
 	public Date getPlanTime() {
@@ -117,28 +76,60 @@ public class Order {
 		this.payId = payId;
 	}
 
-	public int getPayType() {
+	public Integer getPayType() {
 		return payType;
 	}
 
-	public void setPayType(int payType) {
+	public void setPayType(Integer payType) {
 		this.payType = payType;
 	}
 
-	public boolean isPayStatus() {
+	public Boolean getPayStatus() {
 		return payStatus;
 	}
 
-	public void setPayStatus(boolean payStatus) {
+	public void setPayStatus(Boolean payStatus) {
 		this.payStatus = payStatus;
 	}
 
-	public int getDeleted() {
+	public Integer getDeleted() {
 		return deleted;
 	}
 
-	public void setDeleted(int deleted) {
+	public void setDeleted(Integer deleted) {
 		this.deleted = deleted;
+	}
+
+	public Packages getPackages() {
+		return packages;
+	}
+
+	public void setPackages(Packages packages) {
+		this.packages = packages;
+	}
+
+	public Staff getPlanStaff() {
+		return planStaff == null ? new Staff() : planStaff;
+	}
+
+	public void setPlanStaff(Staff planStaff) {
+		this.planStaff = planStaff;
+	}
+
+	public Staff getUsedStaff() {
+		return usedStaff == null ? new Staff() : planStaff;
+	}
+
+	public void setUsedStaff(Staff usedStaff) {
+		this.usedStaff = usedStaff;
+	}
+
+	public String getStoreName() {
+		return storeName;
+	}
+
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
 	}
 	
 }

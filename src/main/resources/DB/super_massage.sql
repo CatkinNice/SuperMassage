@@ -55,13 +55,13 @@ CREATE TABLE `t_user` (
 
 DROP TABLE IF EXISTS `t_packages`;
 CREATE TABLE `t_packages` (
-  `id` bigint(20) NOT NULL COMMENT '产品ID',
+  `id` bigint(20) NOT NULL COMMENT '商品ID',
   `store_id` bigint(20) NOT NULL COMMENT '店铺ID',
-  `name` varchar(100) NOT NULL COMMENT '产品名字',
-  `store_price` float NOT NULL COMMENT '产品店铺价格',
-  `app_price` float NOT NULL COMMENT '产品APP价格',
+  `name` varchar(100) NOT NULL COMMENT '商品名字',
+  `store_price` float NOT NULL COMMENT '商品店铺价格',
+  `app_price` float NOT NULL COMMENT '商品APP价格',
   `timed` tinyint(2) NOT NULL COMMENT '服务时长（分）',
-  `remark` varchar(500) COMMENT '产品介绍',
+  `remark` varchar(500) COMMENT '商品介绍',
   PRIMARY KEY (`id`),
   KEY `FK_packages_store` (`store_id`),
   CONSTRAINT `FK_packages_store` FOREIGN KEY (`store_id`) REFERENCES `t_store` (`id`) ON DELETE CASCADE
@@ -79,7 +79,7 @@ CREATE TABLE `t_staff` (
   `experience` tinyint(1) NOT NULL DEFAULT '1' COMMENT '工作经验(年)',
   `job` varchar(20) NOT NULL COMMENT '岗位',
   `remark` varchar(500) COMMENT '备注',
-  `woke_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '服务状态（0：空闲，1：服务中）',
+  `woke_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '服务状态（-1：休假，0:空闲，1:预约，2：服务）',
   PRIMARY KEY (`id`),
   KEY `FK_staff_store` (`store_id`),
   CONSTRAINT `FK_staff_store` FOREIGN KEY (`store_id`) REFERENCES `t_store` (`id`) ON DELETE CASCADE
@@ -99,14 +99,18 @@ CREATE TABLE `t_staff_packages` (
 
 DROP TABLE IF EXISTS `t_order`;
 CREATE TABLE `t_order` (
-  `id` bigint(20) NOT NULL COMMENT '订单ID',
+  `id` varchar(25) NOT NULL COMMENT '订单ID',
   `store_id` bigint(20) NOT NULL COMMENT '商店ID',
   `user_id` bigint(20) NOT NULL COMMENT '客户ID',
   `package_id` bigint(20) NOT NULL COMMENT '商品ID',
+  `package_name` varchar(100) NOT NULL COMMENT '商品名字',
+  `package_timed` tinyint(2) NOT NULL COMMENT '服务时长（分）', 
   `store_price` float NOT NULL COMMENT '订单店铺价格',
   `app_price` float NOT NULL COMMENT '订单APP价格',
   `plan_staff_id` bigint(20) COMMENT '预约员工ID',
   `used_staff_id` bigint(20) COMMENT '服务员工ID',
+  `plan_staff_name` varchar(20) COMMENT '预约员工名字',
+  `used_staff_name` varchar(20) COMMENT '服务员工名字',
   `plan_time` datetime COMMENT '预约时间',
   `used_time` datetime COMMENT '消费时间',
   `pay_id` varchar(100) COMMENT '支付单号（在线支付使用）',

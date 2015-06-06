@@ -21,9 +21,34 @@ public class UserRepository {
 	
 	@Autowired
 	private MyJdbcTemplate template;
-	
 	private static final String T_USER_COLUMN = " id, account, pwd, `name`, gender, age, icon, bank_id, remark ";
+	private static final class UserMapper implements RowMapper<User> {
+		private boolean displayPwd = false;
+		
+		public UserMapper(boolean displayPwd) {
+			this.displayPwd = displayPwd;
+		}
 
+		@Override
+		public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+			User user = new User();
+			user.setId(rs.getLong("id"));
+			user.setAccount(rs.getString("account"));
+			if (displayPwd) user.setPwd(rs.getString("pwd"));
+			
+			user.setName(rs.getString("name"));
+			user.setGender(rs.getBoolean("gender"));
+			user.setAge(rs.getInt("age"));
+			user.setIcon(rs.getString("icon"));
+			
+			user.setBankId(rs.getString("bank_id"));
+			user.setRemark(rs.getString("remark"));
+			return user;
+		}
+		
+	}
+	
+	
 	public Boolean checkSameAccount(String account) {
 		String sql = "SELECT EXISTS (SELECT id FROM t_user WHERE account = :account)";
 		return template.queryForObject(sql, Collections.singletonMap("account", account), Boolean.class);
@@ -61,32 +86,5 @@ public class UserRepository {
 		String sql = "UPDATE t_user SET pwd = :newPwd WHERE id = :id";
 		template.update(sql, new BeanPropertySqlParameterSource(user));
 	}
-	
-	private static final class UserMapper implements RowMapper<User> {
-		private boolean displayPwd = false;
-		
-		public UserMapper(boolean displayPwd) {
-			this.displayPwd = displayPwd;
-		}
 
-		@Override
-		public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-			User user = new User();
-			user.setId(rs.getLong("id"));
-			user.setAccount(rs.getString("account"));
-			if (displayPwd) user.setPwd(rs.getString("pwd"));
-			
-			user.setName(rs.getString("name"));
-			user.setGender(rs.getBoolean("gender"));
-			user.setAge(rs.getInt("age"));
-			user.setIcon(rs.getString("icon"));
-			
-			user.setBankId(rs.getString("bank_id"));
-			user.setRemark(rs.getString("remark"));
-			return user;
-		}
-		
-	}
-
-	
 }

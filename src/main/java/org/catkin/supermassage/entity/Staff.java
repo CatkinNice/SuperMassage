@@ -22,10 +22,15 @@ public class Staff extends QueryParam {
 	private String job;				//岗位
 	private String remark;			//备注
 	
-	private Integer wokeStatus; 	//服务状态（0:空闲，1:服务中）
+	private Integer wokeStatus; 	//服务状态（-1：休假，0:空闲，1:预约，2：服务）
 	private List<Long> packages;	//员工可服务的项目ID
 
 	public Staff() {
+	}
+
+	public Staff(Long id, Integer wokeStatus) {
+		this.id = id;
+		this.wokeStatus = wokeStatus;
 	}
 
 	public Long getId() {

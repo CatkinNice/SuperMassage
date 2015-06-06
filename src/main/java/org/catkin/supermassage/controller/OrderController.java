@@ -5,6 +5,7 @@ import org.catkin.supermassage.service.OrderService;
 import org.catkin.supermassage.utils.Json;
 import org.catkin.supermassage.utils.RESTurl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,10 +24,20 @@ public class OrderController {
 	private OrderService os;
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public Order addOrEditOrder(@RequestBody String json) throws Exception {
+	public String addOrEditOrder(@RequestBody String json) throws Exception {
 		Order order = Json.parse(json, Order.class);
-		os.addOrEditOrder(order);
-		return order;
+		return os.addOrEditOrder(order);
+	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public Order getOrderById(@PathVariable String id) throws Exception {
+		return os.getOrderById(id);
+	}
+	
+	@RequestMapping(value = "/plan", method = RequestMethod.POST)
+	public String checkPlan(@RequestBody String json) throws Exception {
+		Order order = Json.parse(json, Order.class);
+		return os.checkPlan(order);
 	}
 	
 }

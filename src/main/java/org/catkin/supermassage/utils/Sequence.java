@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.util.Random;
 
 /**
  * ID成器
@@ -59,4 +60,21 @@ public class Sequence {
 		return index;
 	}
 	
+	public synchronized static String getNextOrderId() {
+		StringBuilder builder = new StringBuilder("SM");
+		builder.append(randomString(4));
+		builder.append(getNextId());
+		return builder.toString();
+	}
+	
+	public static String randomString(int length) {
+		Random random = new Random();
+		StringBuilder builder = new StringBuilder();
+		String str = "1234567890QWERTYUIOPASDFGHJKLZXCVBNM";
+		
+		for (int i = 0; i < length; i++) {
+			builder.append(str.charAt(random.nextInt(str.length())));
+		}
+		return builder.toString();
+	}
 }

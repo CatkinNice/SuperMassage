@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.catkin.supermassage.BaseTest;
 import org.catkin.supermassage.entity.StaffPackages;
-import org.catkin.supermassage.service.StaffPackagesRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
