@@ -20,7 +20,7 @@ public class Order {
 	
 	private String payId;			//支付订单号（支付宝号）
 	private Integer payType;		//支付类型（0：到店支付，1：在线支付）
-	private Boolean payStatus;		//支付状态（0：未支付，1：已支付）
+	private Integer useStatus;		//使用状态（0：未支付，1：未使用，2：已使用）
 	private Integer deleted;		//删除状态（0：正常，1：用户删除）
 	
 	private String storeName;		//店铺名称
@@ -84,12 +84,12 @@ public class Order {
 		this.payType = payType;
 	}
 
-	public Boolean getPayStatus() {
-		return payStatus;
+	public Integer getUseStatus() {
+		return useStatus;
 	}
 
-	public void setPayStatus(Boolean payStatus) {
-		this.payStatus = payStatus;
+	public void setUseStatus(Integer useStatus) {
+		this.useStatus = useStatus;
 	}
 
 	public Integer getDeleted() {

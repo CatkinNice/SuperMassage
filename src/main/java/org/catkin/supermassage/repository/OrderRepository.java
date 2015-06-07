@@ -37,7 +37,7 @@ public class OrderRepository {
 			
 			order.setPayId(rs.getString("pay_id"));
 			order.setPayType(rs.getInt("pay_type"));
-			order.setPayStatus(rs.getBoolean("pay_status"));
+			order.setUseStatus(rs.getInt("use_status"));
 			
 			return order;
 		}

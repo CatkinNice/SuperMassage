@@ -29,7 +29,7 @@ public class OrderService {
 			order.setId(Sequence.getNextOrderId());
 			order.setPayType(0);
 			order.setDeleted(0);
-			order.setPayStatus(false);
+			order.setUseStatus(0);
 		}
 		
 		if (order.getPlanTime() != null) {

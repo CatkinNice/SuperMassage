@@ -29,6 +29,11 @@ public interface RESTurl {
 	String packages = "/packages";
 	
 	/**
+	 * 服务包间
+	 */
+	String roome = "/roome";
+	
+	/**
 	 * 用户
 	 */
 	String user = "/user";

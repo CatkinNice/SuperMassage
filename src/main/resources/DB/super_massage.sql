@@ -38,6 +38,20 @@ CREATE TABLE `t_store_buy` (
   CONSTRAINT `FK_storeBuy_store` FOREIGN KEY (`store_id`) REFERENCES `t_store` (`id`) ON DELETE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='店铺使用购买';
 
+DROP TABLE IF EXISTS `t_rooms`;
+CREATE TABLE `t_rooms` (
+  `id` bigint(20) NOT NULL COMMENT '包间ID',
+  `store_id` bigint(20) NOT NULL COMMENT '店铺ID',
+  `name` varchar(20) NOT NULL COMMENT '包间名称',
+  `bed_num` tinyint(1) NOT NULL COMMENT '服务位数量',
+  `remark` varchar(100) COMMENT '包间描述',
+  `end_time` datetime COMMENT '使用结束时间',
+  `use_status` tinyint(1) NOT NULL COMMENT '使用状态（-1：装修，0：空闲，1：使用，2：休息，3：休息结束）',
+  PRIMARY KEY (`id`),
+  KEY `FK_rooms_store` (`store_id`),
+  CONSTRAINT `FK_rooms_store` FOREIGN KEY (`store_id`) REFERENCES `t_store` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='店铺包间';
+
 
 DROP TABLE IF EXISTS `t_user`;
 CREATE TABLE `t_user` (
@@ -104,28 +118,39 @@ CREATE TABLE `t_order` (
   `user_id` bigint(20) NOT NULL COMMENT '客户ID',
   `package_id` bigint(20) NOT NULL COMMENT '商品ID',
   `package_name` varchar(100) NOT NULL COMMENT '商品名字',
-  `package_timed` tinyint(2) NOT NULL COMMENT '服务时长（分）', 
   `store_price` float NOT NULL COMMENT '订单店铺价格',
   `app_price` float NOT NULL COMMENT '订单APP价格',
+  `pay_id` varchar(100) COMMENT '支付单号（在线支付使用）',
+  `pay_type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '支付类型（0：到店支付，1：在线支付）',
+  `use_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '订单状态（0：未支付，1：未使用，2：已使用）',
+  `deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '删除状态（0：正常，1：用户删除）',
+  PRIMARY KEY (`id`),
+  KEY `FK_order_store` (`store_id`),
+  KEY `FK_order_user` (`user_id`),
+  KEY `FK_order_packages` (`package_id`),
+  CONSTRAINT `FK_order_store` FOREIGN KEY (`store_id`) REFERENCES `t_store` (`id`) ON DELETE NO ACTION,
+  CONSTRAINT `FK_order_user` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`) ON DELETE NO ACTION,
+  CONSTRAINT `FK_order_packages` FOREIGN KEY (`package_id`) REFERENCES `t_packages` (`id`) ON DELETE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单';
+
+
+DROP TABLE IF EXISTS `t_consume`;
+CREATE TABLE `t_consume` (
+  `id` varchar(25) NOT NULL COMMENT '订单ID',
+  `package_timed` tinyint(2) NOT NULL COMMENT '服务时长（分）', 
   `plan_staff_id` bigint(20) COMMENT '预约员工ID',
   `used_staff_id` bigint(20) COMMENT '服务员工ID',
   `plan_staff_name` varchar(20) COMMENT '预约员工名字',
   `used_staff_name` varchar(20) COMMENT '服务员工名字',
   `plan_time` datetime COMMENT '预约时间',
   `used_time` datetime COMMENT '消费时间',
-  `pay_id` varchar(100) COMMENT '支付单号（在线支付使用）',
-  `pay_type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '支付类型（0：到店支付，1：在线支付）',
-  `pay_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '支付状态（0：未支付，1：已支付）',
-  `deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '删除状态（0：正常，1：用户删除）',
+  `room_id` bigint(20) COMMENT '使用包间ID',
   PRIMARY KEY (`id`),
-  KEY `FK_order_store` (`store_id`),
-  KEY `FK_order_user` (`user_id`),
-  KEY `FK_order_packages` (`package_id`),
-  KEY `FK_orderPlan_staff` (`plan_staff_id`),
-  KEY `FK_orderUsed_staff` (`used_staff_id`),
-  CONSTRAINT `FK_order_store` FOREIGN KEY (`store_id`) REFERENCES `t_store` (`id`) ON DELETE NO ACTION,
-  CONSTRAINT `FK_order_user` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`) ON DELETE NO ACTION,
-  CONSTRAINT `FK_order_packages` FOREIGN KEY (`package_id`) REFERENCES `t_packages` (`id`) ON DELETE NO ACTION,
-  CONSTRAINT `FK_orderPlan_staff` FOREIGN KEY (`plan_staff_id`) REFERENCES `t_staff` (`id`) ON DELETE NO ACTION,
-  CONSTRAINT `FK_orderUsed_staff` FOREIGN KEY (`used_staff_id`) REFERENCES `t_staff` (`id`) ON DELETE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单';
+  KEY `FK_consumePlan_staff` (`plan_staff_id`),
+  KEY `FK_consumeUsed_staff` (`used_staff_id`),
+  KEY `FK_consume_rooms` (`room_id`),
+  CONSTRAINT `FK_consume_order` FOREIGN KEY (`id`) REFERENCES `t_order` (`id`) ON DELETE NO ACTION,
+  CONSTRAINT `FK_consumePlan_staff` FOREIGN KEY (`plan_staff_id`) REFERENCES `t_staff` (`id`) ON DELETE NO ACTION,
+  CONSTRAINT `FK_consumeUsed_staff` FOREIGN KEY (`used_staff_id`) REFERENCES `t_staff` (`id`) ON DELETE NO ACTION,
+  CONSTRAINT `FK_consume_rooms` FOREIGN KEY (`room_id`) REFERENCES `t_rooms` (`id`) ON DELETE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='消费记录';

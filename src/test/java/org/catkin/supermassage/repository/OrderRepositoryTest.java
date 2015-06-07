@@ -22,7 +22,7 @@ public class OrderRepositoryTest extends BaseTest {
 		order.setStoreId(10001L);
 		order.setUserId(13001L);
 		order.setPayType(0);
-		order.setPayStatus(false);
+		order.setUseStatus(0);
 		order.setDeleted(0);
 		order.setPlanTime(new Date());
 		
