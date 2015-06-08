@@ -118,6 +118,7 @@ CREATE TABLE `t_order` (
   `user_id` bigint(20) NOT NULL COMMENT '客户ID',
   `package_id` bigint(20) NOT NULL COMMENT '商品ID',
   `package_name` varchar(100) NOT NULL COMMENT '商品名字',
+  `package_timed` tinyint(2) NOT NULL COMMENT '商品时长（分）',
   `store_price` float NOT NULL COMMENT '订单店铺价格',
   `app_price` float NOT NULL COMMENT '订单APP价格',
   `pay_id` varchar(100) COMMENT '支付单号（在线支付使用）',

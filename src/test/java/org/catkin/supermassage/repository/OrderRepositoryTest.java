@@ -24,7 +24,6 @@ public class OrderRepositoryTest extends BaseTest {
 		order.setPayType(0);
 		order.setUseStatus(0);
 		order.setDeleted(0);
-		order.setPlanTime(new Date());
 		
 		Packages packages = new Packages();
 		packages.setId(12001L);
@@ -37,7 +36,6 @@ public class OrderRepositoryTest extends BaseTest {
 		Staff staff = new Staff();
 		staff.setId(11001L);
 		staff.setName("二狗");
-		order.setPlanStaff(staff);
-		or.addOrEditOrder(order);
+		or.addOrder(order);
 	}
 }

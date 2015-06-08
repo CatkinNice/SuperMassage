@@ -1,7 +1,5 @@
 package org.catkin.supermassage.entity;
 
-import java.util.Date;
-
 /**
  * 
  * @author Catkin_nice
@@ -12,11 +10,6 @@ public class Order {
 	private Long storeId;			//商铺ID
 	private Long userId;			//用户ID
 	private Packages packages;		//商品对象
-	
-	private Staff planStaff;		//预约员工对象
-	private Staff usedStaff;		//服务员工对象	
-	private Date planTime;			//预约时间
-	private Date usedTime;			//使用时间
 	
 	private String payId;			//支付订单号（支付宝号）
 	private Integer payType;		//支付类型（0：到店支付，1：在线支付）
@@ -50,22 +43,6 @@ public class Order {
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
-	}
-
-	public Date getPlanTime() {
-		return planTime;
-	}
-
-	public void setPlanTime(Date planTime) {
-		this.planTime = planTime;
-	}
-
-	public Date getUsedTime() {
-		return usedTime;
-	}
-
-	public void setUsedTime(Date usedTime) {
-		this.usedTime = usedTime;
 	}
 
 	public String getPayId() {
@@ -106,22 +83,6 @@ public class Order {
 
 	public void setPackages(Packages packages) {
 		this.packages = packages;
-	}
-
-	public Staff getPlanStaff() {
-		return planStaff == null ? new Staff() : planStaff;
-	}
-
-	public void setPlanStaff(Staff planStaff) {
-		this.planStaff = planStaff;
-	}
-
-	public Staff getUsedStaff() {
-		return usedStaff == null ? new Staff() : planStaff;
-	}
-
-	public void setUsedStaff(Staff usedStaff) {
-		this.usedStaff = usedStaff;
 	}
 
 	public String getStoreName() {

@@ -1,11 +1,9 @@
 package org.catkin.supermassage.service;
 
+import org.catkin.supermassage.entity.Consume;
 import org.catkin.supermassage.entity.Order;
+import org.catkin.supermassage.repository.ConsumeRepository;
 import org.catkin.supermassage.repository.OrderRepository;
-import org.catkin.supermassage.repository.StaffRepository;
-import org.catkin.supermassage.utils.ConstantsStatus;
-import org.catkin.supermassage.utils.ErrorType;
-import org.catkin.supermassage.utils.LogicException;
 import org.catkin.supermassage.utils.Sequence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,36 +20,28 @@ public class OrderService {
 	private OrderRepository or;
 	
 	@Autowired
-	private StaffRepository sr;
+	private ConsumeRepository cr;
 
-	public String addOrEditOrder(Order order) {
-		if (order.getId() == null) {
-			order.setId(Sequence.getNextOrderId());
+	/**
+	 * 
+	 * @param order
+	 * @return 用户订单使用码
+	 */
+	public String addOrder(Order order) {
+		order.setDeleted(0);
+		order.setId(Sequence.getNextOrderId());
+		
+		if (order.getPayType() == null) {
 			order.setPayType(0);
-			order.setDeleted(0);
+		}
+		
+		if (order.getUseStatus() == null) {
 			order.setUseStatus(0);
 		}
 		
-		if (order.getPlanTime() != null) {
-			if (order.getPlanStaff().getId() != null) {
-				if (or.checkPlanTime(order)) {
-					//预约时间不可用
-					throw new LogicException(ErrorType.errorPlanTime);
-				}
-			} else {
-				//TODO 随机分配员工
-			}
-		}
-		or.addOrEditOrder(order);
+		or.addOrder(order);
+		cr.addOrEditConcume(new Consume(order.getId(), order.getPackages().getTimed()));
 		return order.getId().substring(0, 6);
-	}
-
-	public String checkPlan(Order order) {
-		if (or.checkPlanTime(order)) {
-			//			预约时间不可用
-			throw new LogicException(ErrorType.errorPlanTime);
-		}
-		return ConstantsStatus.SUCCESS;
 	}
 
 

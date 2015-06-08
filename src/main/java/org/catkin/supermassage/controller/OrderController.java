@@ -24,20 +24,14 @@ public class OrderController {
 	private OrderService os;
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public String addOrEditOrder(@RequestBody String json) throws Exception {
+	public String addOrder(@RequestBody String json) throws Exception {
 		Order order = Json.parse(json, Order.class);
-		return os.addOrEditOrder(order);
+		return os.addOrder(order);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Order getOrderById(@PathVariable String id) throws Exception {
 		return os.getOrderById(id);
-	}
-	
-	@RequestMapping(value = "/plan", method = RequestMethod.POST)
-	public String checkPlan(@RequestBody String json) throws Exception {
-		Order order = Json.parse(json, Order.class);
-		return os.checkPlan(order);
 	}
 	
 }

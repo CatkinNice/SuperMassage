@@ -42,4 +42,9 @@ public interface RESTurl {
 	 * 订单
 	 */
 	String order = "/order";
+	
+	/**
+	 * 消费记录
+	 */
+	String consume = "/consume";
 }

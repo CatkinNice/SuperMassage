@@ -18,7 +18,7 @@ public class Staff extends QueryParam {
 	private Boolean gender;			//性别（false:男，true:女）
 	private Integer age;			//年龄
 	
-	private int experience;			//工作经验
+	private Integer experience;			//工作经验
 	private String job;				//岗位
 	private String remark;			//备注
 	
@@ -31,6 +31,12 @@ public class Staff extends QueryParam {
 	public Staff(Long id, Integer wokeStatus) {
 		this.id = id;
 		this.wokeStatus = wokeStatus;
+	}
+
+	public Staff(Long id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
 	}
 
 	public Long getId() {
@@ -81,11 +87,11 @@ public class Staff extends QueryParam {
 		this.age = age;
 	}
 
-	public int getExperience() {
+	public Integer getExperience() {
 		return experience;
 	}
 
-	public void setExperience(int experience) {
+	public void setExperience(Integer experience) {
 		this.experience = experience;
 	}
 
