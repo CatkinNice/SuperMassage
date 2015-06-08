@@ -27,9 +27,14 @@ public interface ConstantsStatus {
 	int ORDER_USESTATUS_USE = 1;
 	
 	/**
+	 * 订单已预约
+	 */
+	int ORDER_USESTATUS_PANL = 1;
+	
+	/**
 	 * 订单已使用
 	 */
-	int ORDER_USESTATUS_USED = 2;
+	int ORDER_USESTATUS_USED = 3;
 	
 	/**
 	 * 订单未删除
@@ -77,7 +82,7 @@ public interface ConstantsStatus {
 	int STAFF_WOKESTATUS_UNWANTED = 0;
 	
 	/**
-	 * 员工预约
+	 * 员工预约中
 	 */
 	int STAFF_WOKESTATUS_PLAN = 1;
 	
@@ -85,5 +90,19 @@ public interface ConstantsStatus {
 	 * 员工服务中
 	 */
 	int STAFF_WOKESTATUS_RUN = 2;
-
+	
+	/**
+	 * 店铺用户
+	 */
+	int USER_TYPE_STORE = 0;
+	
+	/**
+	 * APP用户
+	 */
+	int USER_TYPE_APP = 1;
+	
+	/**
+	 * 微信用户
+	 */
+	int USER_TYPE_WECAT = 2;
 }

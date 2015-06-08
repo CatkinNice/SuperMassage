@@ -21,7 +21,7 @@ public class UserRepository {
 	
 	@Autowired
 	private MyJdbcTemplate template;
-	private static final String T_USER_COLUMN = " id, account, pwd, `name`, gender, age, icon, bank_id, remark ";
+	private static final String T_USER_COLUMN = " id, account, pwd, `name`, type, gender, age, icon, bank_id, remark ";
 	private static final class UserMapper implements RowMapper<User> {
 		private boolean displayPwd = false;
 		
@@ -37,10 +37,11 @@ public class UserRepository {
 			if (displayPwd) user.setPwd(rs.getString("pwd"));
 			
 			user.setName(rs.getString("name"));
+			user.setType(rs.getInt("type"));
 			user.setGender(rs.getBoolean("gender"));
 			user.setAge(rs.getInt("age"));
-			user.setIcon(rs.getString("icon"));
 			
+			user.setIcon(rs.getString("icon"));
 			user.setBankId(rs.getString("bank_id"));
 			user.setRemark(rs.getString("remark"));
 			return user;
@@ -56,7 +57,7 @@ public class UserRepository {
 
 	public void addOrEditUser(User user) {
 		String sql = "INSERT INTO t_user (" + T_USER_COLUMN + ")"
-				+ " VALUES(:id, :account, :pwd, :name, :gender, :age, :icon, :bankId, :remark)"
+				+ " VALUES(:id, :account, :pwd, :name, :type, :gender, :age, :icon, :bankId, :remark)"
 				+ " ON DUPLICATE KEY UPDATE"
 				+ " `name` = :name,"
 				+ " gender = :gender,"

@@ -57,9 +57,10 @@ DROP TABLE IF EXISTS `t_user`;
 CREATE TABLE `t_user` (
   `id` bigint(20) NOT NULL COMMENT '用户ID',
   `account` varchar(20) NOT NULL COMMENT '用户帐号',
-  `pwd` varchar(50) NOT NULL DEFAULT '' COMMENT '用户密码',
+  `pwd` varchar(50) NOT NULL COMMENT '用户密码',
   `name` varchar(50) COMMENT '用户昵称',
-  `gender` bit(1) COMMENT '性别（男：0，女：1）',
+  `type` tinyint(1) COMMENT '用户类型（0：店铺用户，1：APP用户，2：微信用户）',
+  `gender` bit(1) COMMENT '性别（0：男，1：女）',
   `age` tinyint(1) COMMENT '年龄',
   `icon` varchar(50) COMMENT '用户头像',
   `bank_id` varchar(50) COMMENT '支付帐号',
