@@ -2,6 +2,7 @@ package org.catkin.supermassage.service;
 
 import org.catkin.supermassage.entity.User;
 import org.catkin.supermassage.repository.UserRepository;
+import org.catkin.supermassage.utils.ConstantsStatus;
 import org.catkin.supermassage.utils.ErrorType;
 import org.catkin.supermassage.utils.LogicException;
 import org.catkin.supermassage.utils.Sequence;
@@ -23,6 +24,9 @@ public class UserService {
 		if (user.getId() == null) {
 			if (ur.checkSameAccount(user.getAccount())) {
 				throw new LogicException(ErrorType.errorSameAccount);
+			}
+			if (user.getType() == null) {
+				user.setType(ConstantsStatus.USER_TYPE_APP);
 			}
 			user.setId(Sequence.getNextId());
 		}
