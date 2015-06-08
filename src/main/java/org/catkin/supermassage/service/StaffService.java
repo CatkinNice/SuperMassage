@@ -9,6 +9,7 @@ import org.catkin.supermassage.entity.model.PageResult;
 import org.catkin.supermassage.repository.StaffPackagesRepository;
 import org.catkin.supermassage.repository.StaffRepository;
 import org.catkin.supermassage.repository.StoreBuyRepository;
+import org.catkin.supermassage.utils.ConstantsStatus;
 import org.catkin.supermassage.utils.ErrorType;
 import org.catkin.supermassage.utils.LogicException;
 import org.catkin.supermassage.utils.Sequence;
@@ -44,7 +45,7 @@ public class StaffService {
 		}
 		
 		if (staff.getWokeStatus() == null) {
-			staff.setWokeStatus(0);
+			staff.setWokeStatus(ConstantsStatus.STAFF_WOKESTATUS_UNWANTED);
 		}
 		sr.addOrEditStaff(staff);
 		

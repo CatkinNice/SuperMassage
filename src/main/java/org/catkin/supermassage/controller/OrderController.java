@@ -24,9 +24,10 @@ public class OrderController {
 	private OrderService os;
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public String addOrder(@RequestBody String json) throws Exception {
+	public Order addOrder(@RequestBody String json) throws Exception {
 		Order order = Json.parse(json, Order.class);
-		return os.addOrder(order);
+		os.addOrder(order);
+		return order;
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)

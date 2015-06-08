@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.catkin.supermassage.entity.Roome;
 import org.catkin.supermassage.repository.RoomeRepository;
+import org.catkin.supermassage.utils.ConstantsStatus;
 import org.catkin.supermassage.utils.Sequence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class RoomeService {
 	public void addRoome(Roome roome) {
 		if (roome.getId() == null) {
 			roome.setId(Sequence.getNextId());
-			roome.setUseStatus(0);
+			roome.setUseStatus(ConstantsStatus.ROOM_USESTATUS_AVAILABLE);
 		}
 		rr.addRoome(roome);
 	}

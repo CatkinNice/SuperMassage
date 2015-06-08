@@ -2,9 +2,10 @@ package org.catkin.supermassage.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.Collections;
 
 import org.catkin.supermassage.entity.Order;
+import org.catkin.supermassage.entity.Packages;
 import org.catkin.supermassage.utils.MyJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,12 @@ public class OrderRepository {
 			order.setPayId(rs.getString("pay_id"));
 			order.setPayType(rs.getInt("pay_type"));
 			order.setUseStatus(rs.getInt("use_status"));
+			Packages packages = new Packages();
 			
+			packages.setId(rs.getLong("package_id"));
+			packages.setName(rs.getString("package_name"));
+			packages.setTimed(rs.getInt("package_timed"));
+			order.setPackages(packages);
 			return order;
 		}
 	};
@@ -44,6 +50,11 @@ public class OrderRepository {
 				+ " VALUES (:id, :storeId, :userId, :packages.id, :packages.name, :packages.timed,"
 				+ " :packages.storePrice, :packages.appPrice, :payId, :payType, :useStatus, :deleted)";
 		template.update(sql, new BeanPropertySqlParameterSource(order));
+	}
+
+	public Order getOrderById(String id) {
+		String sql = "SELECT " + T_ORDER_COLUMN + " FROM t_consume WHERE id = :id";
+		return template.queryForObject(sql, Collections.singletonMap("id", id), orderMapper);
 	}
 
 }

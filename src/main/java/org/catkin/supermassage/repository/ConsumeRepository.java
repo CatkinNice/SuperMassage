@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.catkin.supermassage.entity.Consume;
-import org.catkin.supermassage.entity.Order;
 import org.catkin.supermassage.entity.Staff;
 import org.catkin.supermassage.utils.MyJdbcTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +22,12 @@ public class ConsumeRepository {
 	@Autowired
 	private MyJdbcTemplate template;
 	
-	private static final String T_CONSUME_COLUMN = " id, package_timed, plan_staff_id, plan_staff_name, plan_time, used_staff_id, used_staff_name, used_time, room_id ";
+	private static final String T_CONSUME_COLUMN = " order_id, package_timed, plan_staff_id, plan_staff_name, plan_time, used_staff_id, used_staff_name, used_time, room_id ";
 	private static final RowMapper<Consume> consumeMapper = new RowMapper<Consume>() {
 		@Override
 		public Consume mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Consume consume = new Consume();
-			consume.setId(rs.getString("id"));
+			consume.setOrderId(rs.getString("order_id"));
 			consume.setPackageTime(rs.getInt("package_timed"));
 			consume.setPlanStaff(new Staff(rs.getLong("plan_staff_id"), rs.getString("plan_staff_name")));
 			consume.setUsedStaff(new Staff(rs.getLong("used_staff_id"), rs.getString("used_staff_name")));
@@ -42,7 +41,7 @@ public class ConsumeRepository {
 
 	public void addOrEditConcume(Consume consume) {
 		String sql = "INSERT INTO t_consume (" + T_CONSUME_COLUMN + ")"
-				+ " VALUES (:id, :packageTimed, :planStaff.id, :planStaff.name, :planTime, :usedStaff.id, :usedStaff.name, :usedTime, :roomId)"
+				+ " VALUES (:orderId, :packageTimed, :planStaff.id, :planStaff.name, :planTime, :usedStaff.id, :usedStaff.name, :usedTime, :roomId)"
 				+ " ON DUPLICATE KEY UPDATE"
 				+ " plan_staff_id = :planStaff.id,"
 				+ " plan_staff_name = :planStaff.name,"

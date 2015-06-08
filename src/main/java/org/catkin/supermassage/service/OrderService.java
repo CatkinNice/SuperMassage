@@ -1,9 +1,8 @@
 package org.catkin.supermassage.service;
 
-import org.catkin.supermassage.entity.Consume;
 import org.catkin.supermassage.entity.Order;
-import org.catkin.supermassage.repository.ConsumeRepository;
 import org.catkin.supermassage.repository.OrderRepository;
+import org.catkin.supermassage.utils.ConstantsStatus;
 import org.catkin.supermassage.utils.Sequence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,29 +18,24 @@ public class OrderService {
 	@Autowired
 	private OrderRepository or;
 	
-	@Autowired
-	private ConsumeRepository cr;
-
 	/**
 	 * 
 	 * @param order
 	 * @return 用户订单使用码
 	 */
-	public String addOrder(Order order) {
-		order.setDeleted(0);
+	public void addOrder(Order order) {
+		order.setDeleted(ConstantsStatus.ORDER_DELETED_NO);
 		order.setId(Sequence.getNextOrderId());
 		
 		if (order.getPayType() == null) {
-			order.setPayType(0);
+			order.setPayType(ConstantsStatus.ORDER_PAYTYPE_STORE);
 		}
 		
 		if (order.getUseStatus() == null) {
-			order.setUseStatus(0);
+			order.setUseStatus(ConstantsStatus.ORDER_USESTATUS_NOTPAY);
 		}
 		
 		or.addOrder(order);
-		cr.addOrEditConcume(new Consume(order.getId(), order.getPackages().getTimed()));
-		return order.getId().substring(0, 6);
 	}
 
 

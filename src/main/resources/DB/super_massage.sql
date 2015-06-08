@@ -137,7 +137,7 @@ CREATE TABLE `t_order` (
 
 DROP TABLE IF EXISTS `t_consume`;
 CREATE TABLE `t_consume` (
-  `id` varchar(25) NOT NULL COMMENT '订单ID',
+  `order_id` varchar(25) NOT NULL COMMENT '订单ID',
   `package_timed` tinyint(2) NOT NULL COMMENT '服务时长（分）', 
   `plan_staff_id` bigint(20) COMMENT '预约员工ID',
   `used_staff_id` bigint(20) COMMENT '服务员工ID',
@@ -146,11 +146,11 @@ CREATE TABLE `t_consume` (
   `plan_time` datetime COMMENT '预约时间',
   `used_time` datetime COMMENT '消费时间',
   `room_id` bigint(20) COMMENT '使用包间ID',
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`order_id`),
   KEY `FK_consumePlan_staff` (`plan_staff_id`),
   KEY `FK_consumeUsed_staff` (`used_staff_id`),
   KEY `FK_consume_rooms` (`room_id`),
-  CONSTRAINT `FK_consume_order` FOREIGN KEY (`id`) REFERENCES `t_order` (`id`) ON DELETE NO ACTION,
+  CONSTRAINT `FK_consume_order` FOREIGN KEY (`order_id`) REFERENCES `t_order` (`id`) ON DELETE NO ACTION,
   CONSTRAINT `FK_consumePlan_staff` FOREIGN KEY (`plan_staff_id`) REFERENCES `t_staff` (`id`) ON DELETE NO ACTION,
   CONSTRAINT `FK_consumeUsed_staff` FOREIGN KEY (`used_staff_id`) REFERENCES `t_staff` (`id`) ON DELETE NO ACTION,
   CONSTRAINT `FK_consume_rooms` FOREIGN KEY (`room_id`) REFERENCES `t_rooms` (`id`) ON DELETE NO ACTION

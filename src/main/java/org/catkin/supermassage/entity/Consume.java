@@ -8,7 +8,7 @@ import java.util.Date;
  *
  */
 public class Consume {
-	private String id;				//消费ID(订单ID)
+	private String orderId;			//订单ID
 	private Integer packageTime;	//服务时长ID
 	private Staff planStaff;		//预约员工
 	private Staff usedStaff;		//服务员工
@@ -20,17 +20,12 @@ public class Consume {
 	public Consume() {
 	}
 
-	public Consume(String id, Integer packageTime) {
-		this.id = id;
-		this.packageTime = packageTime;
+	public String getOrderId() {
+		return orderId;
 	}
 
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
 	}
 
 	public Integer getPackageTime() {

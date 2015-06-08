@@ -40,5 +40,9 @@ public enum ErrorType {
 	/**
 	 * 预约时间不可用
 	 */
-	errorPlanTime,
+	errorPlanTime, 
+	/**
+	 * 订单未支付
+	 */
+	errorOrderNoPay,
 }
