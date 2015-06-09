@@ -24,15 +24,15 @@ public class OrderService {
 	 * @return 用户订单使用码
 	 */
 	public void addOrder(Order order) {
-		order.setDeleted(ConstantsStatus.ORDER_DELETED_NO);
+		order.setDeleted(ConstantsStatus.Order.DELETED_NO);
 		order.setId(Sequence.getNextOrderId());
 		
 		if (order.getPayType() == null) {
-			order.setPayType(ConstantsStatus.ORDER_PAYTYPE_STORE);
+			order.setPayType(ConstantsStatus.Order.PAY_TYPE_STORE);
 		}
 		
 		if (order.getUseStatus() == null) {
-			order.setUseStatus(ConstantsStatus.ORDER_USESTATUS_NOTPAY);
+			order.setUseStatus(ConstantsStatus.Order.USE_STATUS_NOTPAY);
 		}
 		
 		or.addOrder(order);
@@ -42,6 +42,16 @@ public class OrderService {
 	public Order getOrderById(String id) {
 //		OrderInfoResult result =  or.getOrderById(id);
 		return null;
+	}
+
+
+	public void delOrderById(String id) {
+		or.editOrder(new Order(id, ConstantsStatus.Order.DELETED_YES));
+	}
+
+
+	public void payOrder(Order order) {
+		or.editOrder(order);		
 	}
 	
 }

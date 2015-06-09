@@ -26,7 +26,7 @@ public class UserService {
 				throw new LogicException(ErrorType.errorSameAccount);
 			}
 			if (user.getType() == null) {
-				user.setType(ConstantsStatus.USER_TYPE_APP);
+				user.setType(ConstantsStatus.User.TYPE_APP);
 			}
 			user.setId(Sequence.getNextId());
 		}

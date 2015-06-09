@@ -45,7 +45,7 @@ public class StaffService {
 		}
 		
 		if (staff.getWokeStatus() == null) {
-			staff.setWokeStatus(ConstantsStatus.STAFF_WOKESTATUS_UNWANTED);
+			staff.setWokeStatus(ConstantsStatus.Staff.WOKE_STATUS_IDLE);
 		}
 		sr.addOrEditStaff(staff);
 		

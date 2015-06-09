@@ -21,6 +21,11 @@ public class Order {
 	public Order() {
 	}
 
+	public Order(String id, Integer deleted) {
+		this.id = id;
+		this.deleted = deleted;
+	}
+
 	public String getId() {
 		return id;
 	}

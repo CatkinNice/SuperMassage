@@ -51,6 +51,16 @@ public class OrderRepository {
 				+ " :packages.storePrice, :packages.appPrice, :payId, :payType, :useStatus, :deleted)";
 		template.update(sql, new BeanPropertySqlParameterSource(order));
 	}
+	
+	public void editOrder(Order order) {
+		String sql = "UPDATE t_order SET"
+				+ " pay_id = IFNULL(:payId, pay_id),"
+				+ " pay_type = IFNULL(:payType, pay_type),"
+				+ " use_status = IFNULL(:useStatus, use_status),"
+				+ " deleted = IFNULL(:deleted, deleted)"
+				+ " WHERE id = :id";
+		template.update(sql, new BeanPropertySqlParameterSource(order));
+	}
 
 	public Order getOrderById(String id) {
 		String sql = "SELECT " + T_ORDER_COLUMN + " FROM t_consume WHERE id = :id";

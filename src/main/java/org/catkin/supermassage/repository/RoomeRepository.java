@@ -53,7 +53,7 @@ public class RoomeRepository {
 		return template.query(sql, roomeMapper);
 	}
 
-	public void updateRoomeById(Roome roome) {
+	public void editRoomeById(Roome roome) {
 		String sql = "UPDATE t_rooms SET"
 				+ " end_time = :endTime,"
 				+ " use_status = :useStatus"

@@ -23,7 +23,7 @@ public class RoomeService {
 	public void addRoome(Roome roome) {
 		if (roome.getId() == null) {
 			roome.setId(Sequence.getNextId());
-			roome.setUseStatus(ConstantsStatus.ROOM_USESTATUS_AVAILABLE);
+			roome.setUseStatus(ConstantsStatus.Rooms.USE_STATUS_IDLE);
 		}
 		rr.addRoome(roome);
 	}
@@ -34,6 +34,6 @@ public class RoomeService {
 
 	public void updateRoomeById(long id, int status, Long endTime) {
 		Date time = endTime == null ? null : new Date(endTime);
-		rr.updateRoomeById(new Roome(id, time, status));
+		rr.editRoomeById(new Roome(id, time, status));
 	}
 }

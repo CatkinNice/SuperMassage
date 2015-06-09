@@ -44,5 +44,5 @@ public enum ErrorType {
 	/**
 	 * 订单未支付
 	 */
-	errorOrderNoPay,
+	errorOrderNotPay,
 }
