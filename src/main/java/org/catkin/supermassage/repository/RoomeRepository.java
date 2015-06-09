@@ -9,6 +9,7 @@ import org.catkin.supermassage.utils.MyJdbcTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -53,12 +54,16 @@ public class RoomeRepository {
 		return template.query(sql, roomeMapper);
 	}
 
-	public void editRoomeById(Roome roome) {
+	public void editRoomeById(Roome...roomes) {
 		String sql = "UPDATE t_rooms SET"
 				+ " end_time = :endTime,"
 				+ " use_status = :useStatus"
 				+ " WHERE id = :id";
-		template.update(sql, new BeanPropertySqlParameterSource(roome));
+		SqlParameterSource[] batchValues = new SqlParameterSource[roomes.length];
+		for (int i = 0; i < batchValues.length; i++) {
+			batchValues[i] = new BeanPropertySqlParameterSource(roomes[i]);
+		}
+		template.batchUpdate(sql, batchValues);
 	}
 	
 }

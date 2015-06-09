@@ -17,5 +17,6 @@ public class StoreExpireTask {
 	@Scheduled(cron = "0 0 0 * * ?")
 	public void run() {
 		Log.info("run StoreExpireTask...");
+		//TODO 添加消息机制
 	}
 }

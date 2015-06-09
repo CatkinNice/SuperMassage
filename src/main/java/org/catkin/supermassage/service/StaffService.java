@@ -1,8 +1,11 @@
 package org.catkin.supermassage.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
+import org.catkin.supermassage.entity.Consume;
 import org.catkin.supermassage.entity.Staff;
 import org.catkin.supermassage.entity.StaffPackages;
 import org.catkin.supermassage.entity.model.PageResult;
@@ -76,5 +79,19 @@ public class StaffService {
 		sr.delStaffById(id);
 	}
 	
+
+	/**
+	 * 随机获取员工
+	 * @param storeId		店铺ID
+	 * @param pacdageTimed	服务时长
+	 * @param useTime		使用时间
+	 * @return
+	 */
+	public Staff getRandomStaff(Long storeId, Integer pacdageTimed, Date useTime) {
+		Random random = new Random();
+		Consume consume = new Consume(storeId, pacdageTimed, useTime);
+		List<Staff> list = sr.getIdleStaff(consume);
+		return list.get(random.nextInt(list.size()));
+	}
 	
 }

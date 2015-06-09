@@ -10,7 +10,7 @@ CREATE DATABASE super_massage DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
 
 USE super_massage;
 
-DROP TABLE IF EXISTS `t_store`;
+# DROP TABLE IF EXISTS `t_store`;
 CREATE TABLE `t_store` (
   `id` bigint(20) NOT NULL COMMENT '店铺ID',
   `account` varchar(50) NOT NULL COMMENT '店铺登录帐号',
@@ -24,7 +24,7 @@ CREATE TABLE `t_store` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='店铺';
 
 
-DROP TABLE IF EXISTS `t_store_buy`;
+# DROP TABLE IF EXISTS `t_store_buy`;
 CREATE TABLE `t_store_buy` (
   `id` bigint(20) NOT NULL COMMENT '购买ID',
   `store_id` bigint(20) NOT NULL COMMENT '店铺ID',
@@ -38,7 +38,7 @@ CREATE TABLE `t_store_buy` (
   CONSTRAINT `FK_storeBuy_store` FOREIGN KEY (`store_id`) REFERENCES `t_store` (`id`) ON DELETE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='店铺使用购买';
 
-DROP TABLE IF EXISTS `t_rooms`;
+# DROP TABLE IF EXISTS `t_rooms`;
 CREATE TABLE `t_rooms` (
   `id` bigint(20) NOT NULL COMMENT '包间ID',
   `store_id` bigint(20) NOT NULL COMMENT '店铺ID',
@@ -53,7 +53,7 @@ CREATE TABLE `t_rooms` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='店铺包间';
 
 
-DROP TABLE IF EXISTS `t_user`;
+# DROP TABLE IF EXISTS `t_user`;
 CREATE TABLE `t_user` (
   `id` bigint(20) NOT NULL COMMENT '用户ID',
   `account` varchar(20) NOT NULL COMMENT '用户帐号',
@@ -68,7 +68,7 @@ CREATE TABLE `t_user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户';
 
-DROP TABLE IF EXISTS `t_packages`;
+# DROP TABLE IF EXISTS `t_packages`;
 CREATE TABLE `t_packages` (
   `id` bigint(20) NOT NULL COMMENT '商品ID',
   `store_id` bigint(20) NOT NULL COMMENT '店铺ID',
@@ -83,7 +83,7 @@ CREATE TABLE `t_packages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='产品(服务)';
 
 
-DROP TABLE IF EXISTS `t_staff`;
+# DROP TABLE IF EXISTS `t_staff`;
 CREATE TABLE `t_staff` (
   `id` bigint(20) NOT NULL COMMENT '员工ID',
   `store_id` bigint(20) NOT NULL COMMENT '店铺ID',
@@ -101,7 +101,7 @@ CREATE TABLE `t_staff` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='员工';
 
 
-DROP TABLE IF EXISTS `t_staff_packages`;
+# DROP TABLE IF EXISTS `t_staff_packages`;
 CREATE TABLE `t_staff_packages` (
   `staff_id` bigint(20) NOT NULL COMMENT '员工ID',
   `package_id` bigint(20) NOT NULL COMMENT '商品ID',
@@ -112,10 +112,10 @@ CREATE TABLE `t_staff_packages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='员工服务关系';
 
 
-DROP TABLE IF EXISTS `t_order`;
+# DROP TABLE IF EXISTS `t_order`;
 CREATE TABLE `t_order` (
   `id` varchar(25) NOT NULL COMMENT '订单ID',
-  `store_id` bigint(20) NOT NULL COMMENT '商店ID',
+  `store_id` bigint(20) NOT NULL COMMENT '店铺ID',
   `user_id` bigint(20) NOT NULL COMMENT '客户ID',
   `package_id` bigint(20) NOT NULL COMMENT '商品ID',
   `package_name` varchar(100) NOT NULL COMMENT '商品名字',
@@ -136,9 +136,10 @@ CREATE TABLE `t_order` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单';
 
 
-DROP TABLE IF EXISTS `t_consume`;
+# DROP TABLE IF EXISTS `t_consume`;
 CREATE TABLE `t_consume` (
   `order_id` varchar(25) NOT NULL COMMENT '订单ID',
+  `store_id` bigint(20) NOT NULL COMMENT '店铺ID',
   `package_timed` tinyint(2) NOT NULL COMMENT '服务时长（分）', 
   `plan_staff_id` bigint(20) COMMENT '预约员工ID',
   `used_staff_id` bigint(20) COMMENT '服务员工ID',
@@ -148,10 +149,12 @@ CREATE TABLE `t_consume` (
   `used_time` datetime COMMENT '消费时间',
   `room_id` bigint(20) COMMENT '使用包间ID',
   PRIMARY KEY (`order_id`),
+  KEY `FK_consume_store` (`store_id`),
   KEY `FK_consumePlan_staff` (`plan_staff_id`),
   KEY `FK_consumeUsed_staff` (`used_staff_id`),
   KEY `FK_consume_rooms` (`room_id`),
-  CONSTRAINT `FK_consume_order` FOREIGN KEY (`order_id`) REFERENCES `t_order` (`id`) ON DELETE NO ACTION,
+  CONSTRAINT `FK_consume_order` FOREIGN KEY (`order_id`) REFERENCES `t_order` (`id`),
+  CONSTRAINT `FK_consume_store` FOREIGN KEY (`store_id`) REFERENCES `t_store` (`id`),
   CONSTRAINT `FK_consumePlan_staff` FOREIGN KEY (`plan_staff_id`) REFERENCES `t_staff` (`id`) ON DELETE NO ACTION,
   CONSTRAINT `FK_consumeUsed_staff` FOREIGN KEY (`used_staff_id`) REFERENCES `t_staff` (`id`) ON DELETE NO ACTION,
   CONSTRAINT `FK_consume_rooms` FOREIGN KEY (`room_id`) REFERENCES `t_rooms` (`id`) ON DELETE NO ACTION

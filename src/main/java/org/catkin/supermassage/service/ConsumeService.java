@@ -1,5 +1,6 @@
 package org.catkin.supermassage.service;
 
+import java.util.Date;
 import java.util.Calendar;
 
 import org.catkin.supermassage.entity.Order;
@@ -13,7 +14,6 @@ import org.catkin.supermassage.repository.ConsumeRepository;
 import org.catkin.supermassage.utils.ErrorType;
 import org.catkin.supermassage.utils.LogicException;
 import org.catkin.supermassage.utils.ConstantsStatus;
-
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -36,8 +36,11 @@ public class ConsumeService {
 	
 	@Autowired
 	private StaffRepository sr;
+	
+	@Autowired
+	private StaffService ss;
 
-	public void editConsume(Consume consume) {
+	public void addOrEditConsume(Consume consume) {
 		Order order = or.getOrderById(consume.getOrderId());
 		
 		//判断订单是否支付
@@ -48,6 +51,10 @@ public class ConsumeService {
 		
 		if (consume.getPackageTime() == null) {
 			consume.setPackageTime(order.getPackages().getTimed());
+		}
+		
+		if (consume.getStoreId() == null) {
+			consume.setStoreId(order.getStoreId());
 		}
 		
 		if (consume.getUsedStaff() != null && consume.getRoomId() != null) {
@@ -64,7 +71,12 @@ public class ConsumeService {
 			rr.editRoomeById(new Roome(consume.getRoomId(), calendar.getTime(), ConstantsStatus.Rooms.USE_STATUS_USE));
 		} else {
 			if (consume.getPlanStaff() == null) {
-				//TODO 随机分配员工
+				//随机获取员工
+				Long storeId = consume.getStoreId();
+				Integer packageTimed = consume.getPackageTime();
+				Date useTime = consume.getPlanTime();
+				Staff staff = ss.getRandomStaff(storeId, packageTimed, useTime);
+				consume.setPlanStaff(staff);
 			} else {
 				checkPlan(consume);
 			}
@@ -75,7 +87,7 @@ public class ConsumeService {
 		or.editOrder(order);
 		cr.addOrEditConcume(consume);
 	}
-	
+
 	public String checkPlan(Consume consume) {
 		if (cr.checkPlanTime(consume)) {
 			//预约时间不可用

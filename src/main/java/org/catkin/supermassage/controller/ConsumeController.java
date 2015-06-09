@@ -24,9 +24,9 @@ public class ConsumeController {
 	private ConsumeService sc;
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public String editConsume(@RequestBody String json) throws Exception {
+	public String addOrEditConsume(@RequestBody String json) throws Exception {
 		Consume consume = Json.parse(json, Consume.class);
-		sc.editConsume(consume);
+		sc.addOrEditConsume(consume);
 		return ConstantsStatus.SUCCESS;
 	}
 	

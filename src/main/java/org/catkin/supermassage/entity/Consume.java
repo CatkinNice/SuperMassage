@@ -9,15 +9,29 @@ import java.util.Date;
  */
 public class Consume {
 	private String orderId;			//订单ID
+	private Long storeId;			//店铺ID
 	private Integer packageTime;	//服务时长ID
 	private Staff planStaff;		//预约员工
-	private Staff usedStaff;		//服务员工
 	
+	private Staff usedStaff;		//服务员工
 	private Date planTime;			//预约时间
 	private Date usedTime;			//使用时间
 	private Long roomId;			//使用包间ID
 	
 	public Consume() {
+	}
+
+	/**
+	 * 取空闲员工使用
+	 * @param storeId 店铺ID
+	 * @param packageTime 购买服务时长（分）
+	 * @param time 预约时间或使用时间
+	 */
+	public Consume(Long storeId, Integer packageTime, Date time) {
+		super();
+		this.storeId = storeId;
+		this.packageTime = packageTime;
+		this.usedTime = time;
 	}
 
 	public String getOrderId() {
@@ -26,6 +40,14 @@ public class Consume {
 
 	public void setOrderId(String orderId) {
 		this.orderId = orderId;
+	}
+
+	public Long getStoreId() {
+		return storeId;
+	}
+
+	public void setStoreId(Long storeId) {
+		this.storeId = storeId;
 	}
 
 	public Integer getPackageTime() {

@@ -1,5 +1,6 @@
 package org.catkin.supermassage.repository;
 
+import java.util.List;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -22,16 +23,17 @@ public class ConsumeRepository {
 	@Autowired
 	private MyJdbcTemplate template;
 	
-	private static final String T_CONSUME_COLUMN = " order_id, package_timed, plan_staff_id, plan_staff_name, plan_time, used_staff_id, used_staff_name, used_time, room_id ";
+	private static final String T_CONSUME_COLUMN = " order_id, store_id, package_timed, plan_staff_id, plan_staff_name, plan_time, used_staff_id, used_staff_name, used_time, room_id ";
 	private static final RowMapper<Consume> consumeMapper = new RowMapper<Consume>() {
 		@Override
 		public Consume mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Consume consume = new Consume();
 			consume.setOrderId(rs.getString("order_id"));
+			consume.setStoreId(rs.getLong("store_id"));
 			consume.setPackageTime(rs.getInt("package_timed"));
 			consume.setPlanStaff(new Staff(rs.getLong("plan_staff_id"), rs.getString("plan_staff_name")));
-			consume.setUsedStaff(new Staff(rs.getLong("used_staff_id"), rs.getString("used_staff_name")));
 			
+			consume.setUsedStaff(new Staff(rs.getLong("used_staff_id"), rs.getString("used_staff_name")));
 			consume.setPlanTime(rs.getTimestamp("plan_time"));
 			consume.setUsedTime(rs.getTimestamp("used_time"));
 			consume.setRoomId(rs.getLong("room_id"));
@@ -41,7 +43,7 @@ public class ConsumeRepository {
 
 	public void addOrEditConcume(Consume consume) {
 		String sql = "INSERT INTO t_consume (" + T_CONSUME_COLUMN + ")"
-				+ " VALUES (:orderId, :packageTimed, :planStaff.id, :planStaff.name, :planTime, :usedStaff.id, :usedStaff.name, :usedTime, :roomId)"
+				+ " VALUES (:orderId, :storeId, :packageTimed, :planStaff.id, :planStaff.name, :planTime, :usedStaff.id, :usedStaff.name, :usedTime, :roomId)"
 				+ " ON DUPLICATE KEY UPDATE"
 				+ " plan_staff_id = IFNULL(:planStaff.id, plan_staff_id),"
 				+ " plan_staff_name = IFNULL(:planStaff.name, plan_staff_name),"
@@ -64,5 +66,21 @@ public class ConsumeRepository {
 					+ " OR ADDDATE(used_time, INTERVAL (package_timed - 10) MINUTE) > :planTime"
 					+ " OR ADDDATE(:planTime, INTERVAL (:packageTimed + 10) MINUTE) > plan_time))";
 		return template.queryForObject(sql, new BeanPropertySqlParameterSource(consume), Boolean.class);
+	}
+
+	
+	public List<Consume> getPlanConsumeByNow() {
+		String sql = "SELECT " + T_CONSUME_COLUMN + " FROM t_consume WHERE DATE_FORMAT(plan_time,	'%Y%m%d%H%i') = DATE_FORMAT(NOW(),	'%Y%m%d%H%i')";
+		return template.query(sql, consumeMapper);
+	}
+
+	public List<Consume> getUsedConsumeByNow() {
+		String sql = "SELECT " + T_CONSUME_COLUMN + " FROM t_consume WHERE DATE_FORMAT(ADDDATE(plan_time, INTERVAL 15 MINUTE),	'%Y%m%d%H%i') = DATE_FORMAT(NOW(),	'%Y%m%d%H%i')";
+		return template.query(sql, consumeMapper);
+	}
+
+	public List<Consume> getExpPlanConsumeByNow() {
+		String sql = "SELECT " + T_CONSUME_COLUMN + " FROM t_consume WHERE DATE_FORMAT(ADDDATE(used_time, INTERVAL package_timed MINUTE),	'%Y%m%d%H%i') = DATE_FORMAT(NOW(),	'%Y%m%d%H%i')";
+		return template.query(sql, consumeMapper);
 	}
 }

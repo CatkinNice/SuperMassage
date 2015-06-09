@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
+import org.catkin.supermassage.entity.Consume;
 import org.catkin.supermassage.entity.Staff;
 import org.catkin.supermassage.utils.MyJdbcTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,6 +117,22 @@ public class StaffRepository {
 			batchValues[i] = new BeanPropertySqlParameterSource(staffs[i]);
 		}
 		template.batchUpdate(sql, batchValues);
+	}
+	
+	public List<Staff> getIdleStaff(Consume consume) {
+		String sql = "SELECT " + T_STAFF_COLUMN + " FROM t_staff ts"
+				+ " WHERE store_id = :storeId"
+				+ " AND NOT EXISTS ("
+					+ "	SELECT id FROM t_consume tc"
+					+ "	WHERE tc.store_id = :storeId"
+					+ "	AND tc.plan_time BETWEEN :usedTime AND ADDDATE(:usedTime, INTERVAL :packageTime MINUTE)"
+					+ "	AND tc.plan_staff_id = ts.id)"
+				+ " AND NOT EXISTS ("
+					+ "	SELECT id FROM t_consume tc"
+					+ "	WHERE tc.store_id = :storeId"
+					+ "	AND ADDDATE(tc.used_time, INTERVAL :packageTime MINUTE) > :usedTime"
+					+ "	AND tc.used_staff_id = ts.id)";
+		return template.query(sql, new BeanPropertySqlParameterSource(consume), staffMapper);
 	}
 	
 }
