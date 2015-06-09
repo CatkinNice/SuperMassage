@@ -63,8 +63,13 @@ public class OrderRepository {
 	}
 
 	public Order getOrderById(String id) {
-		String sql = "SELECT " + T_ORDER_COLUMN + " FROM t_consume WHERE id = :id";
+		String sql = "SELECT " + T_ORDER_COLUMN + " FROM t_order WHERE id = :id";
 		return template.queryForObject(sql, Collections.singletonMap("id", id), orderMapper);
+	}
+	
+	public Order getOrderByCode(String code) {
+		String sql = "SELECT " + T_ORDER_COLUMN + " FROM t_order WHERE id LIKE ':code%'";
+		return template.queryForObject(sql, Collections.singletonMap("id", code), orderMapper);
 	}
 
 }

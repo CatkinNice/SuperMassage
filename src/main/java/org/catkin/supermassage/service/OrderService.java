@@ -40,7 +40,7 @@ public class OrderService {
 
 
 	public Order getOrderById(String id) {
-//		OrderInfoResult result =  or.getOrderById(id);
+		or.getOrderById(id);
 		return null;
 	}
 
