@@ -18,11 +18,11 @@ public class Staff extends QueryParam {
 	private Boolean gender;			//性别（false:男，true:女）
 	private Integer age;			//年龄
 	
-	private Integer experience;			//工作经验
+	private Integer experience;		//工作经验
 	private String job;				//岗位
 	private String remark;			//备注
 	
-	private Integer wokeStatus; 	//服务状态（-1：休假，0:空闲，1:预约，2：服务）
+	private Integer wokeStatus; 	//服务状态（-1：休假，0:空闲，1:预约，2：服务） {@link ConstantsStatus}
 	private List<Long> packages;	//员工可服务的项目ID
 
 	public Staff() {

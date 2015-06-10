@@ -44,7 +44,7 @@ public class StaffAndRoomeStatusTask {
 		
 		List<Staff> staffs = new ArrayList<Staff>();
 		List<Roome> roomes = new ArrayList<Roome>();
-		List<String> orderIds = new ArrayList<String>();
+		List<Order> orders = new ArrayList<Order>();
 		
 		//员工预约中状态
 		for (Consume consume : planConsumes) {
@@ -68,12 +68,12 @@ public class StaffAndRoomeStatusTask {
 			roomes.add(roome);
 		}
 		
-		//预约过期员工状态空闲（发送过期消息给用户）
+		//预约过期员工状态空闲,订单状态预约过期（发送过期消息给用户）
 		for (Consume consume : expPlanConsumes) {
 			Staff staff = consume.getPlanStaff();
 			staff.setWokeStatus(ConstantsStatus.Staff.WOKE_STATUS_IDLE);
 			staffs.add(staff);
-			orderIds.add(consume.getOrderId());
+			orders.add(new Order(consume.getOrderId(), null, null, ConstantsStatus.Order.USE_STATUS_EXPPANL));
 		}
 		
 		if (!CollectionUtils.isEmpty(staffs)) {
@@ -83,10 +83,13 @@ public class StaffAndRoomeStatusTask {
 			rr.editRoomeById(roomes.toArray(new Roome[roomes.size()]));
 		}
 		
-		//TODO 预约过期发送消息给用户
-		for (String id : orderIds) {
-			Order order = or.getOrderById(id);
-			order.getUserId();
+		if (!CollectionUtils.isEmpty(orders)) {
+			or.editOrder(orders.toArray(new Order[orders.size()]));
+			//TODO 预约过期发送消息给用户
+			for (Order order : orders) {
+				Order ord = or.getOrderById(order.getId());
+				ord.getUserId();
+			}
 		}
 	}
 }

@@ -1,6 +1,7 @@
 package org.catkin.supermassage.controller;
 
 import org.catkin.supermassage.entity.Order;
+import org.catkin.supermassage.entity.model.PageResult;
 import org.catkin.supermassage.service.OrderService;
 import org.catkin.supermassage.utils.ConstantsStatus;
 import org.catkin.supermassage.utils.Json;
@@ -29,6 +30,12 @@ public class OrderController {
 		Order order = Json.parse(json, Order.class);
 		os.addOrder(order);
 		return order;
+	}
+	
+	@RequestMapping(method = RequestMethod.POST)
+	public PageResult getOrder(@RequestBody String json) throws Exception {
+		Order order = Json.parse(json, Order.class);
+		return os.getOrder(order);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)

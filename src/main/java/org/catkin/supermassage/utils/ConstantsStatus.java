@@ -36,9 +36,14 @@ public interface ConstantsStatus {
 		int USE_STATUS_PANL = 2;
 		
 		/**
+		 * 订单预约过期
+		 */
+		int USE_STATUS_EXPPANL = 3;
+		
+		/**
 		 * 订单已使用
 		 */
-		int USE_STATUS_USED = 3;
+		int USE_STATUS_USED = 4;
 		
 		/**
 		 * 订单未删除

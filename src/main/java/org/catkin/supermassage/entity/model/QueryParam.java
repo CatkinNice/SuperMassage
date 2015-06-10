@@ -33,8 +33,11 @@ public class QueryParam {
 		return size;
 	}
 	
-	public void setPageParam(Integer from, Integer size) {
+	public void setFrom(Integer from) {
 		this.from = from;
+	}
+
+	public void setSize(Integer size) {
 		this.size = size;
 	}
 

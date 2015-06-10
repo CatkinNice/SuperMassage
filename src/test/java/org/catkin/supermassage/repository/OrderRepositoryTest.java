@@ -36,4 +36,10 @@ public class OrderRepositoryTest extends BaseTest {
 		staff.setName("二狗");
 		or.addOrder(order);
 	}
+	
+	@Test
+	public void getOrderById() {
+		Order order = or.getOrderById("6");
+		System.out.println(order.getId());
+	}
 }
