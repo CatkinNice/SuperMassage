@@ -67,8 +67,7 @@ public class ConsumeService {
 			sr.editWokeStatus(new Staff(consume.getUsedStaff().getId(), ConstantsStatus.Staff.WOKE_STATUS_RUN));
 			
 			//修改包间状态（使用中）
-			calendar.add(Calendar.MINUTE, consume.getPackageTime());
-			rr.editRoomeById(new Roome(consume.getRoomId(), calendar.getTime(), ConstantsStatus.Rooms.USE_STATUS_USE));
+			rr.editRoomeById(new Roome(consume.getRoomId(), null, ConstantsStatus.Rooms.USE_STATUS_USE));
 		} else {
 			if (consume.getPlanStaff() == null) {
 				//随机获取员工

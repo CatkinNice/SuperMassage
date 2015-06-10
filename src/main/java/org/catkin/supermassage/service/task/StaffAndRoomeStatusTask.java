@@ -1,5 +1,6 @@
 package org.catkin.supermassage.service.task;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.catkin.supermassage.entity.Consume;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 @Component
-public class StaffStatusTask {
+public class StaffAndRoomeStatusTask {
 	
 	@Autowired
 	private StaffRepository sr;
@@ -32,61 +33,63 @@ public class StaffStatusTask {
 	private ConsumeRepository cr;
 	
 	/**
-	 * 以一分钟的固定间隔更新员工服务状态
+	 * 以一分钟的固定间隔更新员工、包间服务状态
 	 */
 	@Scheduled(initialDelay = 1000 * 60, fixedRate = 1000 * 60)
 	public void run() {
 		List<Consume> planConsumes = cr.getPlanConsumeByNow();
 		List<Consume> usedConsumes = cr.getUsedConsumeByNow();
 		List<Consume> expPlanConsumes = cr.getExpPlanConsumeByNow();
+		List<Roome> breakupRoomes = rr.getBreakupRoomeByNow();
+		
+		List<Staff> staffs = new ArrayList<Staff>();
+		List<Roome> roomes = new ArrayList<Roome>();
+		List<String> orderIds = new ArrayList<String>();
 		
 		//员工预约中状态
 		if (!CollectionUtils.isEmpty(planConsumes)) {
-			Staff[] staffs = new Staff[planConsumes.size()];
-			for (int i = 0; i < staffs.length; i++) {
-				Staff staff = planConsumes.get(i).getPlanStaff();
+			for (Consume consume : planConsumes) {
+				Staff staff = consume.getPlanStaff();
 				staff.setWokeStatus(ConstantsStatus.Staff.WOKE_STATUS_PLAN);
-				staffs[i] = staff;
+				staffs.add(staff);
 			}
-			sr.editWokeStatus(staffs);
 		}
 		
 		//服务结束员工状态空闲，包间状态空闲
 		if (!CollectionUtils.isEmpty(usedConsumes)) {
-			Staff[] staffs = new Staff[usedConsumes.size()];
-			Roome[] roomes = new Roome[usedConsumes.size()];
-			
-			for (int i = 0; i < staffs.length; i++) {
-				Consume consume = planConsumes.get(i);
+			for (Consume consume : usedConsumes) {
 				Staff staff = consume.getPlanStaff();
 				staff.setWokeStatus(ConstantsStatus.Staff.WOKE_STATUS_IDLE);
-				staffs[i] = staff;
-				roomes[i] = new Roome(consume.getRoomId(), null, ConstantsStatus.Rooms.USE_STATUS_IDLE);
+				Roome roome = new Roome(consume.getRoomId(), null, ConstantsStatus.Rooms.USE_STATUS_IDLE);
+				staffs.add(staff);
+				roomes.add(roome);
 			}
-			
-			sr.editWokeStatus(staffs);
-			rr.editRoomeById(roomes);
+		}
+		
+		//包间休息结束状态
+		if (!CollectionUtils.isEmpty(breakupRoomes)) {
+			for (Roome roome : breakupRoomes) {
+				roome.setUseStatus(ConstantsStatus.Rooms.USE_STATUS_BREAKUP);
+				roomes.add(roome);
+			}
 		}
 		
 		//预约过期员工状态空闲（发送过期消息给用户）
 		if (!CollectionUtils.isEmpty(expPlanConsumes)) {
-			Staff[] staffs = new Staff[expPlanConsumes.size()];
-			String[] orderIds = new String[expPlanConsumes.size()];
-			
-			for (int i = 0; i < staffs.length; i++) {
-				Consume consume = planConsumes.get(i);
+			for (Consume consume : expPlanConsumes) {
 				Staff staff = consume.getPlanStaff();
 				staff.setWokeStatus(ConstantsStatus.Staff.WOKE_STATUS_IDLE);
-				staffs[i] = staff;
-				orderIds[i] = consume.getOrderId();
+				staffs.add(staff);
+				orderIds.add(consume.getOrderId());
 			}
-			sr.editWokeStatus(staffs);
-			
-			for (String id : orderIds) {
-				//TODO 发送过期消息给用户
-				Order order = or.getOrderById(id);
-				order.getUserId();
-			}
+		}
+		
+		sr.editWokeStatus(staffs.toArray(new Staff[staffs.size()]));
+		rr.editRoomeById(roomes.toArray(new Roome[roomes.size()]));
+		//TODO 预约过期发送消息给用户
+		for (String id : orderIds) {
+			Order order = or.getOrderById(id);
+			order.getUserId();
 		}
 	}
 }

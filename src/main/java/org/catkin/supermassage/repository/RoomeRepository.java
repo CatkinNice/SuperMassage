@@ -65,5 +65,10 @@ public class RoomeRepository {
 		}
 		template.batchUpdate(sql, batchValues);
 	}
+
+	public List<Roome> getBreakupRoomeByNow() {
+		String sql = "SELECT " + T_ROOMES_COLUMN + " FROM t_rooms WHERE use_status = 2 AND DATE_FORMAT(end_time,	'%Y%m%d%H%i') = DATE_FORMAT(NOW(),	'%Y%m%d%H%i')";
+		return template.query(sql, roomeMapper);
+	}
 	
 }
