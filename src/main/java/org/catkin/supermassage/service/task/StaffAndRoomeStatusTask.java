@@ -47,45 +47,42 @@ public class StaffAndRoomeStatusTask {
 		List<String> orderIds = new ArrayList<String>();
 		
 		//员工预约中状态
-		if (!CollectionUtils.isEmpty(planConsumes)) {
-			for (Consume consume : planConsumes) {
-				Staff staff = consume.getPlanStaff();
-				staff.setWokeStatus(ConstantsStatus.Staff.WOKE_STATUS_PLAN);
-				staffs.add(staff);
-			}
+		for (Consume consume : planConsumes) {
+			Staff staff = consume.getPlanStaff();
+			staff.setWokeStatus(ConstantsStatus.Staff.WOKE_STATUS_PLAN);
+			staffs.add(staff);
 		}
 		
 		//服务结束员工状态空闲，包间状态空闲
-		if (!CollectionUtils.isEmpty(usedConsumes)) {
-			for (Consume consume : usedConsumes) {
-				Staff staff = consume.getPlanStaff();
-				staff.setWokeStatus(ConstantsStatus.Staff.WOKE_STATUS_IDLE);
-				Roome roome = new Roome(consume.getRoomId(), null, ConstantsStatus.Rooms.USE_STATUS_IDLE);
-				staffs.add(staff);
-				roomes.add(roome);
-			}
+		for (Consume consume : usedConsumes) {
+			Staff staff = consume.getPlanStaff();
+			staff.setWokeStatus(ConstantsStatus.Staff.WOKE_STATUS_IDLE);
+			Roome roome = new Roome(consume.getRoomId(), null, ConstantsStatus.Rooms.USE_STATUS_IDLE);
+			staffs.add(staff);
+			roomes.add(roome);
 		}
 		
 		//包间休息结束状态
-		if (!CollectionUtils.isEmpty(breakupRoomes)) {
-			for (Roome roome : breakupRoomes) {
-				roome.setUseStatus(ConstantsStatus.Rooms.USE_STATUS_BREAKUP);
-				roomes.add(roome);
-			}
+		for (Roome roome : breakupRoomes) {
+			roome.setUseStatus(ConstantsStatus.Rooms.USE_STATUS_BREAKUP);
+			roomes.add(roome);
 		}
 		
 		//预约过期员工状态空闲（发送过期消息给用户）
-		if (!CollectionUtils.isEmpty(expPlanConsumes)) {
-			for (Consume consume : expPlanConsumes) {
-				Staff staff = consume.getPlanStaff();
-				staff.setWokeStatus(ConstantsStatus.Staff.WOKE_STATUS_IDLE);
-				staffs.add(staff);
-				orderIds.add(consume.getOrderId());
-			}
+		for (Consume consume : expPlanConsumes) {
+			Staff staff = consume.getPlanStaff();
+			staff.setWokeStatus(ConstantsStatus.Staff.WOKE_STATUS_IDLE);
+			staffs.add(staff);
+			orderIds.add(consume.getOrderId());
 		}
 		
-		sr.editWokeStatus(staffs.toArray(new Staff[staffs.size()]));
-		rr.editRoomeById(roomes.toArray(new Roome[roomes.size()]));
+		if (!CollectionUtils.isEmpty(staffs)) {
+			sr.editWokeStatus(staffs.toArray(new Staff[staffs.size()]));
+		}
+		if (!CollectionUtils.isEmpty(roomes)) {
+			rr.editRoomeById(roomes.toArray(new Roome[roomes.size()]));
+		}
+		
 		//TODO 预约过期发送消息给用户
 		for (String id : orderIds) {
 			Order order = or.getOrderById(id);
