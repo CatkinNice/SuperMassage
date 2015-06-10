@@ -70,16 +70,16 @@ public class ConsumeRepository {
 
 	
 	public List<Consume> getPlanConsumeByNow() {
-		String sql = "SELECT " + T_CONSUME_COLUMN + " FROM t_consume WHERE DATE_FORMAT(plan_time,	'%Y%m%d%H%i') = DATE_FORMAT(NOW(),	'%Y%m%d%H%i')";
-		return template.query(sql, consumeMapper);
-	}
-
-	public List<Consume> getUsedConsumeByNow() {
-		String sql = "SELECT " + T_CONSUME_COLUMN + " FROM t_consume WHERE DATE_FORMAT(ADDDATE(plan_time, INTERVAL 15 MINUTE),	'%Y%m%d%H%i') = DATE_FORMAT(NOW(),	'%Y%m%d%H%i')";
+		String sql = "SELECT " + T_CONSUME_COLUMN + " FROM t_consume WHERE used_time = NULL AND DATE_FORMAT(plan_time,	'%Y%m%d%H%i') = DATE_FORMAT(NOW(),	'%Y%m%d%H%i')";
 		return template.query(sql, consumeMapper);
 	}
 
 	public List<Consume> getExpPlanConsumeByNow() {
+		String sql = "SELECT " + T_CONSUME_COLUMN + " FROM t_consume WHERE used_time = NULL AND DATE_FORMAT(ADDDATE(plan_time, INTERVAL 15 MINUTE),	'%Y%m%d%H%i') = DATE_FORMAT(NOW(),	'%Y%m%d%H%i')";
+		return template.query(sql, consumeMapper);
+	}
+
+	public List<Consume> getUsedConsumeByNow() {
 		String sql = "SELECT " + T_CONSUME_COLUMN + " FROM t_consume WHERE DATE_FORMAT(ADDDATE(used_time, INTERVAL package_timed MINUTE),	'%Y%m%d%H%i') = DATE_FORMAT(NOW(),	'%Y%m%d%H%i')";
 		return template.query(sql, consumeMapper);
 	}
