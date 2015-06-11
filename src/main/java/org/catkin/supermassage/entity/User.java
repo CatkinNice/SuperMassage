@@ -4,7 +4,7 @@ public class User {
 	private Long id;			//用户ID
 	private String account;		//用户帐号
 	private String name;		//用户昵称
-	private Integer type;		//用户类型
+	private Integer type;		//用户类型 {@link ConstantsStatus}
 	
 	private Boolean gender;		//性别（false:男，true:女）
 	private Integer age;		//年龄

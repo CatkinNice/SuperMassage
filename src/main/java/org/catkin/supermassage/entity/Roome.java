@@ -15,7 +15,7 @@ public class Roome {
 	
 	private String remark;		//描述
 	private Date endTime;		//服务结束时间
-	private int useStatus;	//服务状态（-1：装修，0：空闲，1：使用，2：休息，3：休息结束）
+	private int useStatus;	//服务状态（-1：装修，0：空闲，1：使用，2：休息，3：休息结束） {@link ConstantsStatus}
 	
 	public Roome() {
 		super();

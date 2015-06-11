@@ -1,7 +1,14 @@
 package org.catkin.supermassage.service;
 
+import java.util.List;
+
+import org.catkin.supermassage.entity.Consume;
 import org.catkin.supermassage.entity.Order;
+import org.catkin.supermassage.entity.Store;
+import org.catkin.supermassage.entity.model.PageResult;
+import org.catkin.supermassage.repository.ConsumeRepository;
 import org.catkin.supermassage.repository.OrderRepository;
+import org.catkin.supermassage.repository.StoreRepository;
 import org.catkin.supermassage.utils.ConstantsStatus;
 import org.catkin.supermassage.utils.Sequence;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +24,12 @@ public class OrderService {
 	
 	@Autowired
 	private OrderRepository or;
+	
+	@Autowired
+	private StoreRepository sr;
+	
+	@Autowired
+	private ConsumeRepository cr;
 	
 	/**
 	 * 
@@ -38,10 +51,23 @@ public class OrderService {
 		or.addOrder(order);
 	}
 
+	public PageResult getOrder(Order order) {
+		List<Order> data = or.getOrder(order);
+		int totalSize = or.getOrderCount(order);
+		return new PageResult(data, totalSize);
+	}
+
 
 	public Order getOrderById(String id) {
-		or.getOrderById(id);
-		return null;
+		Order order = or.getOrderById(id);
+		
+		Store store = sr.getStoreById(order.getStoreId());
+		order.setStoreName(store.getName());
+		
+		Consume consume = cr.getConsumeByOrderId(id);
+		order.setConsume(consume);
+		
+		return order;
 	}
 
 
@@ -53,5 +79,5 @@ public class OrderService {
 	public void payOrder(Order order) {
 		or.editOrder(order);		
 	}
-	
+
 }

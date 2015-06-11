@@ -124,7 +124,7 @@ CREATE TABLE `t_order` (
   `app_price` float NOT NULL COMMENT '订单APP价格',
   `pay_id` varchar(100) COMMENT '支付单号（在线支付使用）',
   `pay_type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '支付类型（0：到店支付，1：在线支付）',
-  `use_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '订单状态（0：未支付，1：未使用，2：已使用）',
+  `use_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '订单状态（0：未支付，1：未使用，2：已预约，3：预约过期，4：已使用）',
   `deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '删除状态（0：正常，1：用户删除）',
   PRIMARY KEY (`id`),
   KEY `FK_order_store` (`store_id`),

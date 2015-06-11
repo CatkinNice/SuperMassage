@@ -1,5 +1,6 @@
 package org.catkin.supermassage.repository;
 
+import java.util.Collections;
 import java.util.List;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -82,5 +83,10 @@ public class ConsumeRepository {
 	public List<Consume> getUsedConsumeByNow() {
 		String sql = "SELECT " + T_CONSUME_COLUMN + " FROM t_consume WHERE DATE_FORMAT(ADDDATE(used_time, INTERVAL package_timed MINUTE),	'%Y%m%d%H%i') = DATE_FORMAT(NOW(),	'%Y%m%d%H%i')";
 		return template.query(sql, consumeMapper);
+	}
+
+	public Consume getConsumeByOrderId(String orderId) {
+		String sql = "SELECT " + T_CONSUME_COLUMN + " FROM t_consume WHERE order_id = :orderId";
+		return template.queryForObject(sql, Collections.singletonMap("orderId", orderId), consumeMapper);
 	}
 }
