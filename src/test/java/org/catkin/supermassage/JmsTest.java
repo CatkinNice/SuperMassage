@@ -1,7 +1,8 @@
 package org.catkin.supermassage;
 
-import org.catkin.supermassage.utils.Jms;
 import org.junit.Test;
+import org.catkin.supermassage.entity.model.MsgInfo;
+import org.catkin.supermassage.service.jms.JmsSender;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -12,16 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class JmsTest extends BaseTest {
 	
 	@Autowired
-	private Jms jms;
+	private JmsSender sender;
 	
 	@Test
 	public void sendMsg() throws InterruptedException {
-		jms.sendMessage("sm.quere.test");
-		Thread.sleep(1000 * 8);
+		MsgInfo<String> info = new MsgInfo<String>();
+		info.setBody("hello massage!");
+		info.setReceiver("test");
+		sender.sendMessage(info);
+		Thread.sleep(10000);
 	}
-	
-	@Test
-	public void consumer() throws InterruptedException {
-		
-	}
+
 }
