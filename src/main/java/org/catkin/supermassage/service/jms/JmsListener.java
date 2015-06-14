@@ -7,8 +7,8 @@ import org.springframework.amqp.core.MessageListener;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 /**
@@ -25,9 +25,10 @@ public class JmsListener {
 	private ConnectionFactory connectionFactory;
 	
 	
-	@Bean
-	public SimpleMessageListenerContainer name() {
+//	@Bean
+	public SimpleMessageListenerContainer regListener() {
 		SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(connectionFactory);
+		container.setMessageConverter(new Jackson2JsonMessageConverter());
 		
 		//创建消息监听器(MessageListener|ChannelAwareMessageListener)
 	    MessageListenerAdapter messageListener = new MessageListenerAdapter(new MessageListener(){

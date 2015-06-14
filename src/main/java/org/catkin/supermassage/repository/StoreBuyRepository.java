@@ -66,8 +66,16 @@ public class StoreBuyRepository {
 	 */
 	public List<StoreBuy> getExpStoreBuy() {
 		String sql = "SELECT " + T_STORE_BUY_COLUMN + " FROM t_store_buy"
-				+ " WHERE end_time BETWEEN CURRENT_DATE AND DATE_ADD(CURRENT_DATE, INTERVAL 10 DAY)";
+				+ " WHERE expired_msg = 0"
+				+ " AND end_time BETWEEN CURRENT_DATE AND DATE_ADD(CURRENT_DATE, INTERVAL 10 DAY)";
 		return template.query(sql, storeBuyMapper);
+	}
+	
+	public void editExpiredMsg(Long storeId) {
+		String sql = "UPDATE t_store_buy SET expired_msg = 1"
+				+ " WHERE store_id = :storeId"
+				+ " AND end_time BETWEEN CURRENT_DATE AND DATE_ADD(CURRENT_DATE, INTERVAL 10 DAY)";
+		template.update(sql, Collections.singletonMap("storeId", storeId));
 	}
 
 }

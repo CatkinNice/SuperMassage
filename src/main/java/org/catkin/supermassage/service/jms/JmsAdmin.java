@@ -24,4 +24,5 @@ public class JmsAdmin {
 		Queue queue = new Queue(name, true, false, true, arguments);
 		return amqpAdmin.declareQueue(queue);
 	}
+	
 }

@@ -1,16 +1,20 @@
 package org.catkin.supermassage.service.task;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.catkin.supermassage.entity.Consume;
 import org.catkin.supermassage.entity.Order;
 import org.catkin.supermassage.entity.Roome;
 import org.catkin.supermassage.entity.Staff;
+import org.catkin.supermassage.entity.model.MsgInfo;
 import org.catkin.supermassage.repository.ConsumeRepository;
 import org.catkin.supermassage.repository.OrderRepository;
 import org.catkin.supermassage.repository.RoomeRepository;
 import org.catkin.supermassage.repository.StaffRepository;
+import org.catkin.supermassage.service.jms.JmsSender;
+import org.catkin.supermassage.service.jms.MsgType;
 import org.catkin.supermassage.utils.ConstantsStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -31,6 +35,9 @@ public class StaffAndRoomeStatusTask {
 	
 	@Autowired
 	private ConsumeRepository cr;
+	
+	@Autowired
+	private JmsSender jmsSender;
 	
 	/**
 	 * 以一分钟的固定间隔更新员工、包间服务状态
@@ -85,10 +92,18 @@ public class StaffAndRoomeStatusTask {
 		
 		if (!CollectionUtils.isEmpty(orders)) {
 			or.editOrder(orders.toArray(new Order[orders.size()]));
-			//TODO 预约过期发送消息给用户
+			
+			//预约过期发送消息给用户
+			MsgInfo<Object> msgInfo = new MsgInfo<Object>();
+			Calendar calendar = Calendar.getInstance();
+			msgInfo.setSendTime(calendar.getTime());
+			msgInfo.setType(MsgType.user);
+			
 			for (Order order : orders) {
 				Order ord = or.getOrderById(order.getId());
-				ord.getUserId();
+				msgInfo.setBody(ord);
+				msgInfo.setReceiver(ord.getUserId());
+				jmsSender.sendMessage(msgInfo);
 			}
 		}
 	}

@@ -33,6 +33,7 @@ CREATE TABLE `t_store_buy` (
   `buy_time` datetime NOT NULL COMMENT '购买时间',
   `start_time` date NOT NULL COMMENT '服务开始时间',
   `end_time` date NOT NULL COMMENT '服务结束时间',
+  `expired_msg` bit(1) DEFAULT b'0' COMMENT '过期消息（0：开启，1：关闭）',
   PRIMARY KEY (`id`),
   KEY `FK_storeBuy_store` (`store_id`),
   CONSTRAINT `FK_storeBuy_store` FOREIGN KEY (`store_id`) REFERENCES `t_store` (`id`) ON DELETE NO ACTION

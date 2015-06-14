@@ -21,6 +21,8 @@ public class StoreBuyService {
 	public void addStoreBuy(StoreBuy storeBuy) {
 		storeBuy.setId(Sequence.getNextId());
 		sbr.addStoreBuy(storeBuy);
+		//重新购买服务时将10天内过期服务消息关闭
+		sbr.editExpiredMsg(storeBuy.getStoreId());
 	}
 
 	public List<StoreBuy> getStoreBuys(Long id) {
