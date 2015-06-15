@@ -74,12 +74,12 @@ public class StoreRepository {
 	}
 
 	public List<Store> getStores(QueryParam param) {
-		Integer from = param.getFrom();
+		Integer page = param.getPage();
 		Integer size = param.getSize();
 		
 		String sql = "SELECT " + T_STORE_COLUMN + " FROM t_store" + getStoresWhere(param);
 		if (size != null && size > 0){
-			sql += " LIMIT " + (from == null ? 0 : from) + "," + size;
+			sql += " LIMIT " + (page == null ? 0 : page) + "," + size;
 		}
 		return template.query(sql, new StoreMapper());
 	}

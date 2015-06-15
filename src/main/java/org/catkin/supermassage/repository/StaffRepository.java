@@ -63,13 +63,13 @@ public class StaffRepository {
 	}
 	
 	public List<Staff> getStaffs(Staff staff) {
-		Integer from = staff.getFrom();
+		Integer page = staff.getPage();
 		Integer size = staff.getSize();
 		
 		String sql = "SELECT " + T_STAFF_COLUMN + " FROM t_staff" + getStaffWhere(staff);
 				
 		if (size != null && size > 0){
-			sql += " LIMIT " + (from == null ? 0 : from) + "," + size;
+			sql += " LIMIT " + (page == null ? 0 : page) + "," + size;
 		}
 		
 		return template.query(sql, staffMapper);

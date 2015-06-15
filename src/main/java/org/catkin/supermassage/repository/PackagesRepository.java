@@ -54,13 +54,13 @@ public class PackagesRepository {
 	}
 
 	public List<Packages> getPackages(Packages packares) {
-		Integer from = packares.getFrom();
+		Integer page = packares.getPage();
 		Integer size = packares.getSize();
 		
 		String sql = "SELECT " + T_PACKAGES_COLUMN + " FROM t_packages" + getPackagesWhere(packares);
 
 		if (size != null && size > 0){
-			sql += " LIMIT " + (from == null ? 0 : from) + "," + size;
+			sql += " LIMIT " + (page == null ? 0 : page) + "," + size;
 		}
 		return template.query(sql, packagesMapper);
 	}

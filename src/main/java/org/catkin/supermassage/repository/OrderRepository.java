@@ -98,7 +98,7 @@ public class OrderRepository {
 	}
 	
 	public List<Order> getOrder(Order order) {
-		Integer from = order.getFrom();
+		Integer page = order.getPage();
 		Integer size = order.getSize();
 		
 		String sql = "SELECT " + T_ORDER_STORE_COLUMN 
@@ -107,7 +107,7 @@ public class OrderRepository {
 				+ getOrderWhere(order);
 		
 		if (size != null && size > 0){
-			sql += " LIMIT " + (from == null ? 0 : from) + "," + size;
+			sql += " LIMIT " + (page == null ? 0 : page) + "," + size;
 		}
 		return template.query(sql, new OrderMapper(true));
 	}

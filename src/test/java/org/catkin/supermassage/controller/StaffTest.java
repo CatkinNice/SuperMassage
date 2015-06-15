@@ -38,7 +38,7 @@ public class StaffTest extends BaseTest {
 		staff.setStoreId(8001L);
 		staff.setKey("足浴");
 		staff.setWokeStatus(-1);
-		staff.setFrom(0);
+		staff.setPage(0);
 		staff.setSize(1);
 		
 		PageResult result = sc.getStaffs(Json.toJson(staff));

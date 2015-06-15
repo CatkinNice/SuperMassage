@@ -38,7 +38,7 @@ public class PackagesTest extends BaseTest {
 		Packages packages = new Packages();
 		packages.setStoreId(8001L);
 		packages.setKey("仙提");
-		packages.setFrom(0);
+		packages.setPage(0);
 		packages.setSize(10);
 		PageResult result = pc.getPackages(Json.toJson(packages));
 		System.err.println(Json.toJson(result));

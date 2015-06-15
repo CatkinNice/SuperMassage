@@ -7,34 +7,34 @@ public class QueryParam {
 	private String key;
 	
 	/**
-	 * 起始位置
+	 * 页码
 	 */
-	private Integer from;
+	private Integer page;
 	
 	/**
-	 * 获取记录数
+	 * 页记录数
 	 */
 	private Integer size;
 	
 	public QueryParam() {
 	}
 
-	public QueryParam(String key, Integer from, Integer size) {
+	public QueryParam(String key, Integer page, Integer size) {
 		this.key = key;
-		this.from = from;
+		this.page = page;
 		this.size = size;
 	}
 
-	public Integer getFrom() {
-		return from;
+	public Integer getPage() {
+		return page;
 	}
 
 	public Integer getSize() {
 		return size;
 	}
 	
-	public void setFrom(Integer from) {
-		this.from = from;
+	public void setPage(Integer page) {
+		this.page = page;
 	}
 
 	public void setSize(Integer size) {
