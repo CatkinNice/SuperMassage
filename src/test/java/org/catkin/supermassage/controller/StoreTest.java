@@ -38,7 +38,7 @@ public class StoreTest extends BaseTest {
 		buy.setEndTime(calendar.getTime());
 		
 		store.setStoreBuy(buy);
-		store = sc.addOrEditStore(Json.toJson(store));
+//		store = sc.addOrEditStore(Json.toJson(store));
 		System.out.println(Json.toJson(store));
 	}
 	
@@ -59,7 +59,7 @@ public class StoreTest extends BaseTest {
 		Store store = new Store();
 		store.setAccount("cakin");
 		store.setPwd("1234");
-		store = sc.storeLogin(Json.toJson(store));
+		store = sc.storeLogin(store);
 		System.out.println(Json.toJson(store));
 	}
 	
@@ -69,7 +69,7 @@ public class StoreTest extends BaseTest {
 		store.setId(1001L);
 		store.setPwd("123");
 		store.setNewPwd("123456");
-		sc.changePwd(Json.toJson(store));
+		sc.changePwd(store);
 	}
 	
 	@Test
@@ -84,8 +84,9 @@ public class StoreTest extends BaseTest {
 		buy.setStartTime(calendar.getTime());
 		calendar.set(2016, 5, 3);
 		buy.setEndTime(calendar.getTime());
-		buy = sc.addStoreBuy(Json.toJson(buy));
 		System.out.println(Json.toJson(buy));
+//		buy = sc.addStoreBuy(buy);
+//		System.out.println(Json.toJson(buy));
 	}
 	
 	@Test

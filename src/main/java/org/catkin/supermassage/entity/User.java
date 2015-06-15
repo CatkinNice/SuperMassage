@@ -1,5 +1,9 @@
 package org.catkin.supermassage.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@JsonInclude(Include.NON_NULL)
 public class User {
 	private Long id;			//用户ID
 	private String account;		//用户帐号

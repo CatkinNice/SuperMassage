@@ -4,6 +4,10 @@ import java.util.List;
 
 import org.catkin.supermassage.entity.model.QueryParam;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@JsonInclude(Include.NON_NULL)
 public class Packages extends QueryParam {
 	private Long id;			//产品ID
 	private Long storeId;		//商铺ID

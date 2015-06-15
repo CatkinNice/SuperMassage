@@ -28,7 +28,7 @@ public class StaffTest extends BaseTest {
 		staff.setJob("按摩师");
 		staff.setPackages(Arrays.asList(3001L, 4001L));
 		
-		staff = sc.addOrEditStaff(Json.toJson(staff));
+		staff = sc.addOrEditStaff(staff);
 		System.out.println(Json.toJson(staff));
 	}
 	

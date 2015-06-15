@@ -4,11 +4,15 @@ import java.util.List;
 
 import org.catkin.supermassage.entity.model.QueryParam;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 /**
  * 
  * @author Catkin_nice
  *
  */
+@JsonInclude(Include.NON_NULL)
 public class Staff extends QueryParam {
 	private Long id;				//员工ID
 	private Long storeId;			//店铺ID

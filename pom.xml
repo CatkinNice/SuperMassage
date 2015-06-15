@@ -21,6 +21,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<start-class>org.catkin.supermassage.Application</start-class>
+		<tomcat.version>7.0.59</tomcat.version>
 		<java.version>1.7</java.version>
 	</properties>
 

@@ -26,8 +26,7 @@ public class StaffController {
 	private StaffService ss;
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public Staff addOrEditStaff(@RequestBody String json) throws Exception {
-		Staff staff = Json.parse(json, Staff.class);
+	public Staff addOrEditStaff(@RequestBody Staff staff) throws Exception {
 		ss.addOrEditStaff(staff);
 		return staff;
 	}

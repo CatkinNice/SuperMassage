@@ -2,11 +2,15 @@ package org.catkin.supermassage.entity;
 
 import org.catkin.supermassage.entity.model.QueryParam;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 /**
  * 
  * @author Catkin_nice
  *
  */
+@JsonInclude(Include.NON_NULL)
 public class Order extends QueryParam {
 	private String id;				//订单ID
 	private Long storeId;			//商铺ID

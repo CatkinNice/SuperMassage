@@ -5,7 +5,6 @@ import java.util.List;
 import org.catkin.supermassage.entity.Roome;
 import org.catkin.supermassage.service.RoomeService;
 import org.catkin.supermassage.utils.ConstantsStatus;
-import org.catkin.supermassage.utils.Json;
 import org.catkin.supermassage.utils.RESTurl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,8 +26,7 @@ public class RoomeController {
 	private RoomeService rs;
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public Roome addRoome(@RequestBody String json) throws Exception {
-		Roome roome = Json.parse(json, Roome.class);
+	public Roome addRoome(@RequestBody Roome roome) throws Exception {
 		rs.addRoome(roome);
 		return roome;
 	}

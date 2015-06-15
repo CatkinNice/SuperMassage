@@ -82,10 +82,12 @@ public class StoreService {
 	}
 
 	public void changePwd(Store store) {
+		if (store.getPwd().equals(store.getNewPwd())) return;
 		Store dbStore = sr.getStoreById(store.getId(), true);
+		
 		if (!dbStore.getPwd().equals(store.getPwd())) {
 			throw new LogicException(ErrorType.errorPassword);
 		}
-		sr.changePwd(store);
+		sr.editPwd(store);
 	}
 }

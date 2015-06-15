@@ -114,7 +114,7 @@ public class StoreRepository {
 		return template.queryForObject(sql, Collections.singletonMap("account", account), new StoreMapper(true));
 	}
 
-	public void changePwd(Store store) {
+	public void editPwd(Store store) {
 		String sql = "UPDATE t_store SET pwd = :newPwd WHERE id = :id";
 		template.update(sql, new BeanPropertySqlParameterSource(store));
 	}

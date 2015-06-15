@@ -17,7 +17,7 @@ public class UserTest extends BaseTest {
 		user.setId(Sequence.getNextId());
 		user.setAccount("catkin");
 		user.setPwd("123");
-		uc.addOrEditUser(Json.toJson(user));
+		uc.addOrEditUser(user);
 		System.out.println(Json.toJson(user));
 	}
 }

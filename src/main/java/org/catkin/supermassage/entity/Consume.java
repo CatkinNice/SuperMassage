@@ -2,11 +2,15 @@ package org.catkin.supermassage.entity;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 /**
  * 
  * @author Catkin_nice
  *
  */
+@JsonInclude(Include.NON_NULL)
 public class Consume {
 	private String orderId;			//订单ID
 	private Long storeId;			//店铺ID

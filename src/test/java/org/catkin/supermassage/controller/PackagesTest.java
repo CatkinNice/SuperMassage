@@ -29,7 +29,7 @@ public class PackagesTest extends BaseTest {
 		packages.setTimed(60);
 		packages.setStaffs(Arrays.asList(2001L));
 		
-		packages = pc.addOrEditPackage(Json.toJson(packages));
+		packages = pc.addOrEditPackage(packages);
 		System.err.println(Json.toJson(packages));
 	}
 	
@@ -40,7 +40,7 @@ public class PackagesTest extends BaseTest {
 		packages.setKey("仙提");
 		packages.setPage(0);
 		packages.setSize(10);
-		PageResult result = pc.getPackages(Json.toJson(packages));
+		PageResult result = pc.getPackages(packages);
 		System.err.println(Json.toJson(result));
 	}
 	

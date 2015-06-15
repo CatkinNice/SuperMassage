@@ -1,7 +1,6 @@
 package org.catkin.supermassage.controller;
 
 import org.catkin.supermassage.utils.ConstantsStatus;
-import org.catkin.supermassage.utils.Json;
 import org.catkin.supermassage.utils.RESTurl;
 import org.catkin.supermassage.entity.User;
 import org.catkin.supermassage.service.UserService;
@@ -25,8 +24,7 @@ public class UserController {
 	private UserService us;
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public User addOrEditUser(@RequestBody String json) throws Exception {
-		User user = Json.parse(json, User.class);
+	public User addOrEditUser(@RequestBody User user) throws Exception {
 		us.addOrEditUser(user);
 		return user;
 	}
@@ -37,14 +35,13 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public User login(@RequestBody String json) throws Exception {
-		User user = Json.parse(json, User.class);
+	public User login(@RequestBody User user) throws Exception {
 		return us.login(user);
 	}
 	
 	@RequestMapping(value = "/changepwd", method = RequestMethod.POST)
-	public String changepwd(@RequestBody String json) throws Exception {
-		us.changepwd(Json.parse(json, User.class));
+	public String changepwd(@RequestBody User user) throws Exception {
+		us.changepwd(user);
 		return ConstantsStatus.SUCCESS;
 	}
 }

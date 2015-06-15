@@ -3,7 +3,6 @@ package org.catkin.supermassage.controller;
 import org.catkin.supermassage.entity.Consume;
 import org.catkin.supermassage.service.ConsumeService;
 import org.catkin.supermassage.utils.ConstantsStatus;
-import org.catkin.supermassage.utils.Json;
 import org.catkin.supermassage.utils.RESTurl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,15 +23,13 @@ public class ConsumeController {
 	private ConsumeService sc;
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public String addOrEditConsume(@RequestBody String json) throws Exception {
-		Consume consume = Json.parse(json, Consume.class);
+	public String addOrEditConsume(@RequestBody Consume consume) throws Exception {
 		sc.addOrEditConsume(consume);
 		return ConstantsStatus.SUCCESS;
 	}
 	
 	@RequestMapping(value = "/checkplan", method = RequestMethod.POST)
-	public String checkPlan(@RequestBody String json) throws Exception {
-		Consume consume = Json.parse(json, Consume.class);
+	public String checkPlan(@RequestBody Consume consume) throws Exception {
 		return sc.checkPlan(consume);
 	}
 

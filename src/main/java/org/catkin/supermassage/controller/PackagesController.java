@@ -4,7 +4,6 @@ import org.catkin.supermassage.entity.Packages;
 import org.catkin.supermassage.entity.model.PageResult;
 import org.catkin.supermassage.service.PackagesService;
 import org.catkin.supermassage.utils.ConstantsStatus;
-import org.catkin.supermassage.utils.Json;
 import org.catkin.supermassage.utils.RESTurl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,15 +25,14 @@ public class PackagesController {
 	private PackagesService ps;
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public Packages addOrEditPackage(@RequestBody String json) throws Exception {
-		Packages packages = Json.parse(json, Packages.class);
+	public Packages addOrEditPackage(@RequestBody Packages packages) throws Exception {
 		ps.addOrEditPackage(packages);
 		return packages;
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public PageResult getPackages(@RequestBody String json) throws Exception {
-		return ps.getPackages(Json.parse(json, Packages.class));
+	public PageResult getPackages(@RequestBody Packages packages) throws Exception {
+		return ps.getPackages(packages);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)

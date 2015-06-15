@@ -4,7 +4,6 @@ import org.catkin.supermassage.entity.Order;
 import org.catkin.supermassage.entity.model.PageResult;
 import org.catkin.supermassage.service.OrderService;
 import org.catkin.supermassage.utils.ConstantsStatus;
-import org.catkin.supermassage.utils.Json;
 import org.catkin.supermassage.utils.RESTurl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,15 +25,13 @@ public class OrderController {
 	private OrderService os;
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public Order addOrder(@RequestBody String json) throws Exception {
-		Order order = Json.parse(json, Order.class);
+	public Order addOrder(@RequestBody Order order) throws Exception {
 		os.addOrder(order);
 		return order;
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public PageResult getOrder(@RequestBody String json) throws Exception {
-		Order order = Json.parse(json, Order.class);
+	public PageResult getOrder(@RequestBody Order order) throws Exception {
 		return os.getOrder(order);
 	}
 	
@@ -44,8 +41,7 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value = "/pay", method = RequestMethod.PUT)
-	public String payOrder(@RequestBody String json) throws Exception {
-		Order order = Json.parse(json, Order.class);
+	public String payOrder(@RequestBody Order order) throws Exception {
 		os.payOrder(order);
 		return ConstantsStatus.SUCCESS;
 	}
